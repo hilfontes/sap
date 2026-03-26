@@ -54,8 +54,8 @@ export default function LoginForm() {
           "Content-Type": "application/json",
         },
         credentials: "include",
-        // withCredentials: true, // axios style
         body: JSON.stringify(values),
+        // withCredentials: true, // axios style
       });
 
       console.log("Status:", request.status);
