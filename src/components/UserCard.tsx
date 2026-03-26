@@ -20,7 +20,7 @@ export default function UserCard({ user }: Props) {
   const router = useRouter();
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const handleLogout = async () => {
-    await fetch(`${API_URL}/default/auth/logout`, {
+    await fetch(`${API_URL}/api/auth/logout`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

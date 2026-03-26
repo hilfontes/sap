@@ -16,7 +16,7 @@ export function SendReceiptButton({ paymentId, onSuccess }: Props) {
     setLoading(true);
 
     const res = await fetch(
-      `${API_URL}/default/payments/${paymentId}/send-receipt`,
+      `${API_URL}/api/payments/${paymentId}/send-receipt`,
       { method: "POST" },
     );
 

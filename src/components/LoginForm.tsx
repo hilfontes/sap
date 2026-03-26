@@ -48,7 +48,7 @@ export default function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     setIsSubmitting(true);
     try {
-      const request = await fetch(`${API_URL}/default/auth/login`, {
+      const request = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default function LoginForm() {
       console.log("Login bem-sucedida");
       console.log("Token...:", data.accessToken);
 
-      const requestUser = await fetch(`${API_URL}/default/auth/me`, {
+      const requestUser = await fetch(`${API_URL}/api/auth/me`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${data.accessToken}`,

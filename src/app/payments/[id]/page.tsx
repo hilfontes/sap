@@ -19,7 +19,7 @@ export default function PaymentsPage({ params }: PageProps) {
 
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch("http://localhost:3001/default/auth/eu", {
+      const res = await fetch("http://localhost:3001/api/auth/eu", {
         credentials: "include",
       });
 
@@ -42,7 +42,7 @@ export default function PaymentsPage({ params }: PageProps) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3001/default/payment/create", {
+    const res = await fetch("http://localhost:3001/api/payment/create", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -27,7 +27,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
   const { id } = await params;
 
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
-  const userRes = await fetch(`${API_URL}/default/auth/users/${id}`, {
+  const userRes = await fetch(`${API_URL}/api/auth/users/${id}`, {
     cache: "no-store",
   });
 
@@ -38,7 +38,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
   const user = await userRes.json();
 
   // 🔹 Buscar pagamentos do utilizador
-  const paymentsRes = await fetch(`${API_URL}/default/payment/user/${id}`, {
+  const paymentsRes = await fetch(`${API_URL}/api/payment/user/${id}`, {
     cache: "no-store",
   });
 
@@ -141,7 +141,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
                 userId={id}
                 currentPhoto={
                   user.photo
-                    ? `${API_URL}/auth/default/${user.photo}` // 🔥 corrigido também aqui
+                    ? `${API_URL}/auth/api/${user.photo}` // 🔥 corrigido também aqui
                     : "/avatar-placeholder.png"
                 }
               />

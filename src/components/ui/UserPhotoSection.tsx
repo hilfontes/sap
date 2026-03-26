@@ -9,7 +9,7 @@ export function UserPhotoSection({ userId, photo }: any) {
         userId={userId}
         currentPhoto={
           photo
-            ? `http://localhost:3001/default/${photo}`
+            ? `http://localhost:3001/api/${photo}`
             : "/avatar-placeholder.png"
         }
       />

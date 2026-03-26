@@ -4,7 +4,7 @@ import { cookies } from "next/headers";
 export default async function Page() {
   const cookiesList = await cookies();
 
-  const requestUser = await fetch("http://localhost:3001/default/auth/users", {
+  const requestUser = await fetch("http://localhost:3001/api/auth/users", {
     headers: {
       cookie: cookiesList.toString(),
     },

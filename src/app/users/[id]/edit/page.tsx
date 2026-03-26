@@ -39,7 +39,7 @@ export default function EditUserPage({ params }: PageProps) {
   // 🔹 carregar utilizador
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch(`http://localhost:3001/default/auth/users/${id}`);
+      const res = await fetch(`http://localhost:3001/api/auth/users/${id}`);
 
       const data = await res.json();
       console.log("Utilizador carregado:", data);
@@ -62,7 +62,7 @@ export default function EditUserPage({ params }: PageProps) {
   useEffect(() => {
     async function loadInstitutions() {
       const res = await fetch(
-        "http://localhost:3001/default/institutions/getinstitutions",
+        "http://localhost:3001/api/institutions/getinstitutions",
       );
 
       const data = await res.json();
@@ -77,7 +77,7 @@ export default function EditUserPage({ params }: PageProps) {
   useEffect(() => {
     async function loadProvinces() {
       const res = await fetch(
-        "http://localhost:3001/default/provinces/getprovinces",
+        "http://localhost:3001/api/provinces/getprovinces",
       );
 
       const data = await res.json();
@@ -89,7 +89,7 @@ export default function EditUserPage({ params }: PageProps) {
   }, []);
 
   const onSubmit = async (data: FormData) => {
-    const res = await fetch(`http://localhost:3001/default/auth/users/${id}`, {
+    const res = await fetch(`http://localhost:3001/api/auth/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

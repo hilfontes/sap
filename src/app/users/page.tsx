@@ -29,7 +29,7 @@ export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetch(`${API_URL}/default/auth/users`)
+    fetch(`${API_URL}/api/auth/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);

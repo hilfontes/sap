@@ -28,7 +28,7 @@ export function UploadPhoto({ userId, currentPhoto }: any) {
     const data = await res.json();
 
     if (res.ok) {
-      setPreview(`http://localhost:3001/default/${data.photo}`);
+      setPreview(`http://localhost:3001/api/${data.photo}`);
     }
   };
 
