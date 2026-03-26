@@ -1,0 +1,8 @@
+{
+  "rewrites": [
+    {
+      "source": "/default/:path*",
+      "destination": "https://sap-api-8ktd.onrender.com*"
+    }
+  ]
+}
