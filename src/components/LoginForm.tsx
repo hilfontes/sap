@@ -32,6 +32,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();
@@ -47,7 +48,7 @@ export default function LoginForm() {
   const onSubmit = async (values: LoginFormValues) => {
     setIsSubmitting(true);
     try {
-      const request = await fetch("http://localhost:3001/default/auth/login", {
+      const request = await fetch(`${API_URL}/default/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -73,7 +74,6 @@ export default function LoginForm() {
       console.log("Login bem-sucedida");
       console.log("Token...:", data.accessToken);
 
-      const API_URL = process.env.NEXT_PUBLIC_API_URL;
       const requestUser = await fetch(`${API_URL}/default/auth/me`, {
         method: "POST",
         headers: {
