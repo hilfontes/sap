@@ -22,14 +22,14 @@ type User = {
 };
 
 const ITEMS_PER_PAGE = 5;
-
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    fetch("http://localhost:3001/default/auth/users")
+    fetch(`${API_URL}/default/auth/users`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);

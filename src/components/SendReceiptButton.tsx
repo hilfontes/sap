@@ -8,13 +8,15 @@ type Props = {
 };
 
 export function SendReceiptButton({ paymentId, onSuccess }: Props) {
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
   const [loading, setLoading] = useState(false);
 
   async function sendReceipt() {
     setLoading(true);
 
     const res = await fetch(
-      `http://localhost:3001/default/payments/${paymentId}/send-receipt`,
+      `${API_URL}/default/payments/${paymentId}/send-receipt`,
       { method: "POST" },
     );
 
