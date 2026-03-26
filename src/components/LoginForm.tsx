@@ -73,8 +73,9 @@ export default function LoginForm() {
       console.log("Login bem-sucedida");
       console.log("Token...:", data.accessToken);
 
-      const requestUser = await fetch("http://localhost:3001/default/auth/me", {
-        method: "GET",
+      const API_URL = process.env.NEXT_PUBLIC_API_URL;
+      const requestUser = await fetch(`${API_URL}/default/auth/me`, {
+        method: "POST",
         headers: {
           Authorization: `Bearer ${data.accessToken}`,
         },

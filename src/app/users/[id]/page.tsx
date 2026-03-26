@@ -26,10 +26,10 @@ type PageProps = {
 export default async function UserDetailsPage({ params }: PageProps) {
   const { id } = await params;
 
-  const userRes = await fetch(
-    `http://localhost:3001/default/auth/users/${id}`,
-    { cache: "no-store" },
-  );
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const userRes = await fetch(`${API_URL}/default/auth/users/${id}`, {
+    cache: "no-store",
+  });
 
   if (!userRes.ok) {
     throw new Error("Erro ao buscar utilizador");
@@ -38,10 +38,9 @@ export default async function UserDetailsPage({ params }: PageProps) {
   const user = await userRes.json();
 
   // 🔹 Buscar pagamentos do utilizador
-  const paymentsRes = await fetch(
-    `http://localhost:3001/default/payment/user/${id}`,
-    { cache: "no-store" },
-  );
+  const paymentsRes = await fetch(`${API_URL}/default/payment/user/${id}`, {
+    cache: "no-store",
+  });
 
   const payments: Payment[] = paymentsRes.ok ? await paymentsRes.json() : [];
 
@@ -142,7 +141,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
                 userId={id}
                 currentPhoto={
                   user.photo
-                    ? `http://localhost:3001/auth/default/${user.photo}` // 🔥 corrigido também aqui
+                    ? `${API_URL}/auth/default/${user.photo}` // 🔥 corrigido também aqui
                     : "/avatar-placeholder.png"
                 }
               />
