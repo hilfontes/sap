@@ -206,7 +206,7 @@ export default function EditUserPage({ params }: PageProps) {
               type="button"
               onClick={() => {
                 console.log("button clicked");
-                form.handleSubmit(onSubmit);
+                onSubmit(form.getValues());
               }}
               className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800"
             >
