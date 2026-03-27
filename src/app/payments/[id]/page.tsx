@@ -9,7 +9,7 @@ type PageProps = {
 
 export default function PaymentsPage({ params }: PageProps) {
   const { id } = use(params); // ✅ nova forma do Next.js
-
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [form, setForm] = useState({
     amount: "",
     frequency: "MONTHLY",
@@ -19,7 +19,7 @@ export default function PaymentsPage({ params }: PageProps) {
 
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch("http://localhost:3001/api/auth/eu", {
+      const res = await fetch(`${API_URL}/api/auth/eu`, {
         credentials: "include",
       });
 
@@ -42,7 +42,7 @@ export default function PaymentsPage({ params }: PageProps) {
   const handleSubmit = async (e: any) => {
     e.preventDefault();
 
-    const res = await fetch("http://localhost:3001/api/payment/create", {
+    const res = await fetch(`${API_URL}/api/payment/create`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
