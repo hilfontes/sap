@@ -117,7 +117,7 @@ export default function EditUserPage({ params }: PageProps) {
 
       <div className="min-h-screen flex justify-center items-center bg-gray-100 p-10">
         <form
-          onSubmit={form.handleSubmit(onSubmit)}
+          /* onSubmit={form.handleSubmit(onSubmit)} */
           className="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl"
         >
           <h2 className="text-2xl font-bold text-blue-900 mb-6">
@@ -203,7 +203,11 @@ export default function EditUserPage({ params }: PageProps) {
           <div className="flex justify-start gap-3 mt-6">
             {/* Guardar */}
             <button
-              type="submit"
+              type="button"
+              onClick={() => {
+                console.log("button clicked");
+                form.handleSubmit(onSubmit);
+              }}
               className="bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800"
             >
               Guardar Alterações
