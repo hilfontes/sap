@@ -31,7 +31,7 @@ export default function EditUserPage({ params }: PageProps) {
 
   const [institutions, setInstitutions] = useState([]);
   const [provinces, setProvinces] = useState([]);
-
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const form = useForm<FormData>({
     resolver: zodResolver(userSchema),
   });
@@ -39,7 +39,7 @@ export default function EditUserPage({ params }: PageProps) {
   // 🔹 carregar utilizador
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch(`http://localhost:3001/api/auth/users/${id}`);
+      const res = await fetch(`${API_URL}/api/auth/users/${id}`);
 
       const data = await res.json();
       console.log("Utilizador carregado:", data);
@@ -61,9 +61,7 @@ export default function EditUserPage({ params }: PageProps) {
   // 🔹 carregar instituições
   useEffect(() => {
     async function loadInstitutions() {
-      const res = await fetch(
-        "http://localhost:3001/api/institutions/getinstitutions",
-      );
+      const res = await fetch(`${API_URL}/api/institutions/getinstitutions`);
 
       const data = await res.json();
       setInstitutions(data);
@@ -76,9 +74,7 @@ export default function EditUserPage({ params }: PageProps) {
   // 🔹 carregar províncias
   useEffect(() => {
     async function loadProvinces() {
-      const res = await fetch(
-        "http://localhost:3001/api/provinces/getprovinces",
-      );
+      const res = await fetch(`${API_URL}/api/provinces/getprovinces`);
 
       const data = await res.json();
       setProvinces(Array.isArray(data) ? data : data.data || []);
@@ -89,7 +85,7 @@ export default function EditUserPage({ params }: PageProps) {
   }, []);
 
   const onSubmit = async (data: FormData) => {
-    const res = await fetch(`http://localhost:3001/api/auth/users/${id}`, {
+    const res = await fetch(`${API_URL}/api/auth/users/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
