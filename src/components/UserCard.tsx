@@ -18,7 +18,7 @@ type Props = {
 
 export default function UserCard({ user }: Props) {
   const router = useRouter();
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const handleLogout = async () => {
     await fetch(`${API_URL}/api/auth/logout`, {
       method: "POST",

@@ -22,7 +22,7 @@ type User = {
 };
 
 const ITEMS_PER_PAGE = 5;
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");

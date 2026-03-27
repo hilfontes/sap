@@ -8,7 +8,7 @@ type Props = {
 };
 
 export function SendReceiptButton({ paymentId, onSuccess }: Props) {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
   const [loading, setLoading] = useState(false);
 

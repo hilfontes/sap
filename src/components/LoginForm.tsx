@@ -32,7 +32,7 @@ const loginSchema = z.object({
 type LoginFormValues = z.infer<typeof loginSchema>;
 
 export default function LoginForm() {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const router = useRouter();

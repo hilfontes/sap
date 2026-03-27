@@ -26,7 +26,7 @@ type PageProps = {
 export default async function UserDetailsPage({ params }: PageProps) {
   const { id } = await params;
 
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const userRes = await fetch(`${API_URL}/api/auth/users/${id}`, {
     cache: "no-store",
   });
