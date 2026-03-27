@@ -17,7 +17,7 @@ const schema = z.object({
   provinceId: z.string().min(1, "Selecione a província"),
   institutionId: z.string().min(1, "Selecione a instituição"),
   location: z.string().min(3, "Endereço obrigatório"),
-  role: z.enum(["ASSOCIATE", "ADMIN"]).default("ASSOCIATE"),
+  role: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
