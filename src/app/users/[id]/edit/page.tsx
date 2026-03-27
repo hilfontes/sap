@@ -85,6 +85,7 @@ export default function EditUserPage({ params }: PageProps) {
   }, []);
 
   const onSubmit = async (data: FormData) => {
+    console.log("Dados do formulário:", data);
     const res = await fetch(`${API_URL}/api/auth/users/${id}`, {
       method: "PUT",
       headers: {
@@ -104,9 +105,12 @@ export default function EditUserPage({ params }: PageProps) {
     if (res.ok) {
       alert("Utilizador atualizado!");
       router.push(`/users/${id}`);
+    } else {
+      console.error("Erro ao atualizar utilizador:", await res.text());
+      alert("Erro ao atualizar utilizador");
     }
   };
-
+  console.log("fordata", form.getValues());
   return (
     <>
       <Navbar />
