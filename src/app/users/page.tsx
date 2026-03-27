@@ -52,19 +52,27 @@ export default function UsersPage() {
 
       <div className="p-6 pt-20"></div>
       <div className="p-6">
-        <h1 className="text-2xl font-semibold mb-4">Lista de Associados</h1>
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-semibold">Lista de Associados</h1>
 
-        {/* 🔍 Pesquisa */}
-        <input
-          type="text"
-          placeholder="Pesquisar por nome ou email..."
-          className="border p-2 rounded w-60 mb-4"
-          value={search}
-          onChange={(e) => {
-            setSearch(e.target.value);
-            setCurrentPage(1);
-          }}
-        />
+          {/* 🔍 Pesquisa */}
+          <input
+            type="text"
+            placeholder="Pesquisar por nome ou email..."
+            className="border p-2 rounded w-60 mb-4"
+            value={search}
+            onChange={(e) => {
+              setSearch(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
+          <Link
+            href="/users/create"
+            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm"
+          >
+            + Novo Associado
+          </Link>
+        </div>
 
         {/* 📊 Tabela */}
         <div className="overflow-x-auto">

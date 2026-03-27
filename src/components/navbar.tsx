@@ -28,6 +28,13 @@ export function Navbar() {
           </Link>
 
           <Link
+            href="/users"
+            className="text-white hover:text-blue-300 transition-colors"
+          >
+            Associados
+          </Link>
+
+          <Link
             href="/activities"
             className="text-white hover:text-blue-300 transition-colors"
           >
