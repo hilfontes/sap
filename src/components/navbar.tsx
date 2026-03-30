@@ -21,13 +21,6 @@ export function Navbar() {
         {/* Rotas */}
         <div className="flex gap-6 items-center">
           <Link
-            href="/payments"
-            className="text-white hover:text-blue-300 transition-colors"
-          >
-            Pagamentos
-          </Link>
-
-          <Link
             href="/users"
             className="text-white hover:text-blue-300 transition-colors"
           >

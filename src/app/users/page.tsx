@@ -53,7 +53,10 @@ export default function UsersPage() {
       <div className="p-6 pt-20"></div>
       <div className="p-6">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-semibold">Lista de Associados</h1>
+          <h1 className="text-2xl font-semibold">
+            Lista de Associados
+            <span className="text-b-500 ml-2">({users.length})</span>
+          </h1>
 
           {/* 🔍 Pesquisa */}
           <input
