@@ -124,6 +124,7 @@ export default function CreateUserPage() {
             <input
               placeholder="ASSOCIATE"
               {...register("role")}
+              disabled
               className="w-full border p-2 rounded-md"
             />
             {errors.role && (
