@@ -55,7 +55,7 @@ export default function UsersPage() {
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-semibold">
             Lista de Associados
-            <span className="text-b-500 ml-2">({users.length})</span>
+            <span className="text-blue-500 ml-2">({users.length})</span>
           </h1>
 
           {/* 🔍 Pesquisa */}

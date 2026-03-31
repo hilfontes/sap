@@ -18,6 +18,7 @@ const schema = z.object({
   institutionId: z.string().min(1, "Selecione a instituição"),
   location: z.string().min(3, "Endereço obrigatório"),
   role: z.string(),
+  specialityId: z.string().min(1, "Selecione a especialidade"),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -27,6 +28,7 @@ export default function CreateUserPage() {
 
   const [provinces, setProvinces] = useState([]);
   const [institutions, setInstitutions] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
 
   // 🔥 react-hook-form
   const {
@@ -46,6 +48,10 @@ export default function CreateUserPage() {
     fetch(`${API_URL}/api/institutions/getinstitutions`)
       .then((res) => res.json())
       .then(setInstitutions);
+
+    fetch(`${API_URL}/api/specialities/getspecialities`)
+      .then((res) => res.json())
+      .then(setSpecialities);
   }, []);
 
   // 🚀 submit
@@ -58,8 +64,10 @@ export default function CreateUserPage() {
         },
         body: JSON.stringify({
           ...data,
+          role: "ASSOCIATE",
           provinceId: Number(data.provinceId),
           institutionId: Number(data.institutionId),
+          specialityId: Number(data.specialityId),
         }),
       });
 
@@ -114,7 +122,7 @@ export default function CreateUserPage() {
           {/* Role */}
           <div>
             <input
-              placeholder="Role"
+              placeholder="ASSOCIATE"
               {...register("role")}
               className="w-full border p-2 rounded-md"
             />
@@ -164,6 +172,26 @@ export default function CreateUserPage() {
             {errors.provinceId && (
               <p className="text-red-500 text-sm">
                 {errors.provinceId.message}
+              </p>
+            )}
+          </div>
+
+          {/* Especialidade */}
+          <div>
+            <select
+              {...register("specialityId")}
+              className="w-full border rounded-md p-2"
+            >
+              <option value="">Selecionar a Especialidade</option>
+              {specialities.map((spec: any) => (
+                <option key={spec.id} value={spec.id.toString()}>
+                  {spec.specialityName}
+                </option>
+              ))}
+            </select>
+            {errors.specialityId && (
+              <p className="text-red-500 text-sm">
+                {errors.specialityId.message}
               </p>
             )}
           </div>
