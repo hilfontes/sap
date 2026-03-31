@@ -18,6 +18,7 @@ const userSchema = z.object({
   cellphone: z.string().optional(),
   provinceId: z.string().optional(),
   specialityId: z.string().optional(),
+  role: z.string().optional(),
 });
 
 type FormData = z.infer<typeof userSchema>;
@@ -55,6 +56,7 @@ export default function EditUserPage({ params }: PageProps) {
         cellphone: data.cellphone,
         provinceId: data.provinceId,
         specialityId: data.specialityId,
+        role: data.role,
       });
     }
 
@@ -181,6 +183,15 @@ export default function EditUserPage({ params }: PageProps) {
               <label className="block text-sm">Telemóvel</label>
               <input
                 {...form.register("cellphone")}
+                className="w-full border rounded-md p-2"
+              />
+            </div>
+
+            {/* Role */}
+            <div>
+              <label className="block text-sm">Role</label>
+              <input
+                {...form.register("role")}
                 className="w-full border rounded-md p-2"
               />
             </div>
