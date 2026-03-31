@@ -20,9 +20,9 @@ type User = {
     id: number;
     provinceName: string;
   };
-  specialty: {
+  speciality: {
     id: number;
-    specialtyName: string;
+    specialityName: string;
   };
 };
 
@@ -58,28 +58,35 @@ export default function UsersPage() {
       <div className="p-6 pt-20"></div>
       <div className="p-6">
         <div className="flex justify-between items-center mb-4">
-          <h1 className="text-2xl font-semibold">
-            Lista de Associados
-            <span className="text-blue-500 ml-2">({users.length})</span>
-          </h1>
+          {/* Título */}
+          <div className="flex flex-col">
+            <span className="bg-blue-300 text-blue-800 text-xs font-medium px-5.5 py-1.5 rounded-full">
+              TOTAL ASSOCIADOS: {users.length}
+            </span>
+          </div>
 
-          {/* 🔍 Pesquisa */}
-          <input
-            type="text"
-            placeholder="Pesquisar por nome ou email..."
-            className="border p-2 rounded w-60 mb-4"
-            value={search}
-            onChange={(e) => {
-              setSearch(e.target.value);
-              setCurrentPage(1);
-            }}
-          />
-          <Link
-            href="/users/create"
-            className="bg-green-900 text-white px-4 py-2 rounded-md hover:bg-green-800 text-sm"
-          >
-            + Novo Associado
-          </Link>
+          {/* Grupo da direita */}
+          <div className="flex items-center gap-3">
+            {/* 🔍 Pesquisa */}
+            <input
+              type="text"
+              placeholder="Pesquisar por nome ou email..."
+              className="border p-2 rounded w-60 h-10"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setCurrentPage(1);
+              }}
+            />
+
+            {/* Botão */}
+            <Link
+              href="/users/create"
+              className="h-10 flex items-center bg-green-900 text-white px-4 rounded-md hover:bg-green-800 text-sm"
+            >
+              + Novo Associado
+            </Link>
+          </div>
         </div>
 
         {/* 📊 Tabela */}
@@ -91,7 +98,7 @@ export default function UsersPage() {
                   <th className="text-white p-3 text-left">Nome</th>
                   <th className="text-white p-3 text-left">Email</th>
                   <th className="text-white p-3 text-left">Localização</th>
-                  <th className="text-white p-3 text-left">Role</th>
+
                   <th className="text-white p-3 text-left">Especialidade</th>
                   <th className="text-white p-3 text-left">Ações</th>
                 </tr>
@@ -106,8 +113,8 @@ export default function UsersPage() {
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
                     <td className="p-3">{user.province?.provinceName}</td>
-                    <td className="p-3">{user.role}</td>
-                    <td className="p-3">{user.specialty?.specialtyName}</td>
+
+                    <td className="p-3">{user.speciality?.specialityName}</td>
 
                     <td className="p-3">
                       <Link

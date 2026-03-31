@@ -103,7 +103,7 @@ export default function EditUserPage({ params }: PageProps) {
 
   const onSubmit = async (data: FormData) => {
     console.log("Dados do formulário:", data);
-    const res = await fetch(`${API_URL}/api/auth/users/${id}`, {
+    const res = await fetch(`${API_URL}/api/auth/updateuser/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -188,13 +188,14 @@ export default function EditUserPage({ params }: PageProps) {
             </div>
 
             {/* Role */}
+            {/*
             <div>
               <label className="block text-sm">Role</label>
               <input
                 {...form.register("role")}
                 className="w-full border rounded-md p-2"
               />
-            </div>
+            </div>*/}
 
             {/* Província */}
             <div>

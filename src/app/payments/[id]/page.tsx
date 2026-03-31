@@ -1,6 +1,7 @@
 "use client";
 
 import { Navbar } from "@/components/navbar";
+import { useRouter } from "next/navigation";
 import { useEffect, useState, use } from "react";
 
 type PageProps = {
@@ -8,6 +9,7 @@ type PageProps = {
 };
 
 export default function PaymentsPage({ params }: PageProps) {
+  const router = useRouter(); // 👈 aqui
   const { id } = use(params); // ✅ nova forma do Next.js
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [form, setForm] = useState({
@@ -60,6 +62,7 @@ export default function PaymentsPage({ params }: PageProps) {
 
     if (res.ok) {
       alert("Pagamento registado!");
+      router.push(`/users/${id}`);
     }
   };
 
@@ -97,7 +100,13 @@ export default function PaymentsPage({ params }: PageProps) {
             onChange={handleChange}
             className="w-full border rounded-md p-2"
           />
-
+          <input
+            type="text"
+            name="reference"
+            placeholder="Referência"
+            onChange={handleChange}
+            className="w-full border rounded-md p-2"
+          />
           <textarea
             name="OBS"
             placeholder="Observação"

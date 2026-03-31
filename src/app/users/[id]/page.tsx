@@ -85,13 +85,6 @@ export default async function UserDetailsPage({ params }: PageProps) {
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Role</p>
-                  <p className="font-medium text-gray-900">
-                    {user.role ?? "—"}
-                  </p>
-                </div>
-
-                <div>
                   <p className="text-sm text-gray-500">Localização</p>
                   <p className="font-medium text-gray-900">
                     {user.provinceName}
@@ -120,7 +113,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
                 <div>
                   <p className="text-sm text-gray-500">Especialidade</p>
                   <span className="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
-                    {user.specialityName ?? "—"}
+                    {user.speciality?.specialityName ?? "—"}
                   </span>
                 </div>
 
@@ -145,11 +138,9 @@ export default async function UserDetailsPage({ params }: PageProps) {
                     : "/avatar-placeholder.png"
                 }
               />
-
               <p className="font-semibold text-gray-800 text-center">
                 {`${user.name.split(" ")[0]} ${user.name.split(" ").slice(-1)[0]}`}
               </p>
-              <p className="text-sm text-gray-500 text-center">{user.role}</p>
             </div>
           </aside>
         </div>
