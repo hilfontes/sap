@@ -17,7 +17,7 @@ const schema = z.object({
   password: z.string().min(3, "Mínimo 3 caracteres"),
   provinceId: z.string().min(1, "Selecione a província"),
   institutionId: z.string().min(1, "Selecione a instituição"),
-  location: z.string().min(3, "Endereço obrigatório"),
+  location: z.string(),
   role: z.string(),
   specialityId: z.string().min(1, "Selecione a especialidade"),
 });
@@ -36,8 +36,13 @@ export default function CreateUserPage() {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
+    getValues,
   } = useForm<FormData>({
     resolver: zodResolver(schema),
+    defaultValues: {
+      location: "...",
+      role: "ASSOCIATE",
+    },
   });
 
   // 🔄 carregar dados
@@ -58,6 +63,7 @@ export default function CreateUserPage() {
   // 🚀 submit
   const onSubmit = async (data: FormData) => {
     try {
+      console.log(data);
       const res = await fetch(`${API_URL}/api/auth/register`, {
         method: "POST",
         headers: {
@@ -66,6 +72,8 @@ export default function CreateUserPage() {
         body: JSON.stringify({
           ...data,
           role: "ASSOCIATE",
+          localidade: "...",
+          address: "...",
           provinceId: Number(data.provinceId),
           institutionId: Number(data.institutionId),
           specialityId: Number(data.specialityId),
@@ -84,7 +92,7 @@ export default function CreateUserPage() {
       toast.error("Erro ao criar associado ❌");
     }
   };
-
+  console.log(getValues());
   return (
     <>
       <Navbar />
@@ -110,21 +118,8 @@ export default function CreateUserPage() {
               )}
             </div>
 
-            {/* Endereço */}
-            <div>
-              <input
-                placeholder="Endereço"
-                {...register("location")}
-                className="w-full border p-2 rounded-md"
-              />
-              {errors.location && (
-                <p className="text-red-500 text-sm">
-                  {errors.location.message}
-                </p>
-              )}
-            </div>
-
             {/* Role */}
+            {/*
             <div>
               <input
                 placeholder="ASSOCIATE"
@@ -135,7 +130,7 @@ export default function CreateUserPage() {
               {errors.role && (
                 <p className="text-red-500 text-sm">{errors.role.message}</p>
               )}
-            </div>
+            </div>*/}
 
             {/* Email */}
             <div>

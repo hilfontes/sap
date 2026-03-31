@@ -76,7 +76,7 @@ export default function UsersPage() {
           />
           <Link
             href="/users/create"
-            className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 text-sm"
+            className="bg-green-900 text-white px-4 py-2 rounded-md hover:bg-green-800 text-sm"
           >
             + Novo Associado
           </Link>
@@ -112,7 +112,7 @@ export default function UsersPage() {
                     <td className="p-3">
                       <Link
                         href={`/users/${user.id}`}
-                        className="bg-blue-600 text-white px-3 py-1 rounded-md hover:bg-blue-700 text-sm"
+                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm"
                       >
                         Detalhes
                       </Link>
