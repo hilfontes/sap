@@ -11,6 +11,7 @@ type User = {
   address: string;
   nif: string;
   cellphone: string;
+  role: string;
   institution: {
     id: number;
     institutionName: string;
@@ -18,6 +19,10 @@ type User = {
   province: {
     id: number;
     provinceName: string;
+  };
+  specialty: {
+    id: number;
+    specialtyName: string;
   };
 };
 
@@ -86,7 +91,8 @@ export default function UsersPage() {
                   <th className="text-white p-3 text-left">Nome</th>
                   <th className="text-white p-3 text-left">Email</th>
                   <th className="text-white p-3 text-left">Localização</th>
-                  <th className="text-white p-3 text-left">Endereço</th>
+                  <th className="text-white p-3 text-left">Role</th>
+                  <th className="text-white p-3 text-left">Especialidade</th>
                   <th className="text-white p-3 text-left">Ações</th>
                 </tr>
               </thead>
@@ -99,8 +105,9 @@ export default function UsersPage() {
                   >
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
-                    <td className="p-3">{user.location}</td>
-                    <td className="p-3">{user.address}</td>
+                    <td className="p-3">{user.province?.provinceName}</td>
+                    <td className="p-3">{user.role}</td>
+                    <td className="p-3">{user.specialty?.specialtyName}</td>
 
                     <td className="p-3">
                       <Link
