@@ -16,7 +16,9 @@ export function Navbar() {
         `}
       >
         {/* Logo / Nome */}
-        <span className="text-white font-bold text-lg">SAP</span>
+        <span className="text-white font-bold text-lg">
+          SAP - AMBIENTE DE QUALIDADE
+        </span>
 
         {/* Rotas */}
         <div className="flex gap-6 items-center">

@@ -17,6 +17,7 @@ const userSchema = z.object({
   nif: z.string().optional(),
   cellphone: z.string().optional(),
   provinceId: z.string().optional(),
+  specialityId: z.string().optional(),
 });
 
 type FormData = z.infer<typeof userSchema>;
@@ -31,6 +32,7 @@ export default function EditUserPage({ params }: PageProps) {
 
   const [institutions, setInstitutions] = useState([]);
   const [provinces, setProvinces] = useState([]);
+  const [specialities, setSpecialities] = useState([]);
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const form = useForm<FormData>({
     resolver: zodResolver(userSchema),
@@ -52,6 +54,7 @@ export default function EditUserPage({ params }: PageProps) {
         nif: data.nif,
         cellphone: data.cellphone,
         provinceId: data.provinceId,
+        specialityId: data.specialityId,
       });
     }
 
@@ -84,6 +87,18 @@ export default function EditUserPage({ params }: PageProps) {
     loadProvinces();
   }, []);
 
+  useEffect(() => {
+    async function loadSpecialities() {
+      const res = await fetch(`${API_URL}/api/specialities/getspecialities`);
+
+      const data = await res.json();
+      setSpecialities(Array.isArray(data) ? data : data.data || []);
+      console.log("Especialidades carregadas:", data);
+    }
+
+    loadSpecialities();
+  }, []);
+
   const onSubmit = async (data: FormData) => {
     console.log("Dados do formulário:", data);
     const res = await fetch(`${API_URL}/api/auth/users/${id}`, {
@@ -98,6 +113,9 @@ export default function EditUserPage({ params }: PageProps) {
         },
         province: {
           connect: { id: Number(data.provinceId) },
+        },
+        speciality: {
+          connect: { id: Number(data.specialityId) },
         },
       }),
     });
@@ -178,6 +196,22 @@ export default function EditUserPage({ params }: PageProps) {
                 {provinces.map((prov: any) => (
                   <option key={prov.id} value={prov.id.toString()}>
                     {prov.provinceName}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Especialidade */}
+            <div>
+              <label className="block text-sm">Especialidade</label>
+              <select
+                {...form.register("specialityId")}
+                className="w-full border rounded-md p-2"
+              >
+                <option value="">Selecionar Especialidade</option>
+                {specialities.map((spec: any) => (
+                  <option key={spec.id} value={spec.id.toString()}>
+                    {spec.specialityName}
                   </option>
                 ))}
               </select>
