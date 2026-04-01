@@ -32,12 +32,13 @@ export default function UsersPage() {
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/users`)
+    fetch(`${API_URL}/api/auth/users?order=${sortOrder}`)
       .then((res) => res.json())
       .then((data) => setUsers(data));
-  }, []);
+  }, [sortOrder]);
 
   // 🔍 Pesquisa por nome e email
   const filteredUsers = users.filter(
@@ -82,7 +83,7 @@ export default function UsersPage() {
             {/* Botão */}
             <Link
               href="/users/create"
-              className="h-10 flex items-center bg-green-900 text-white px-4 rounded-md hover:bg-green-800 text-sm"
+              className="h-10 flex items-center bg-blue-900 text-white px-4 rounded-md hover:bg-blue-800 text-sm"
             >
               + Novo Associado
             </Link>
@@ -104,11 +105,11 @@ export default function UsersPage() {
                 </tr>
               </thead>
 
-              <tbody className="bg-gray-200">
+              <tbody className="bg-gray-100">
                 {paginatedUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-t border-gray-300 hover:bg-gray-300 transition"
+                    className="border-t border-gray-100 hover:bg-gray-300 transition"
                   >
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
