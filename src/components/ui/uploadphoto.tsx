@@ -1,6 +1,6 @@
 "use client";
 
-import { CldUploadWidget, CldImage } from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import { useEffect, useState } from "react";
 
 export function UploadPhoto({ userId, currentPhoto }: any) {
