@@ -36,7 +36,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
   }
 
   const user = await userRes.json();
-
+  console.log("User data:", user); // 🔍 Log para verificar os dados do utilizador
   // 🔹 Buscar pagamentos do utilizador
   const paymentsRes = await fetch(`${API_URL}/api/payment/user/${id}`, {
     cache: "no-store",
@@ -130,14 +130,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
           {/* ================= FOTO ================= */}
           <aside className="w-full lg:w-64 flex justify-center lg:justify-end">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center">
-              <UploadPhoto
-                userId={id}
-                currentPhoto={
-                  user.photo
-                    ? `${API_URL}/auth/api/${user.photo}` // 🔥 corrigido também aqui
-                    : "/avatar-placeholder.png"
-                }
-              />
+              <UploadPhoto userId={id} currentPhoto={user.photo} />
               <p className="font-semibold text-gray-800 text-center">
                 {`${user.name.split(" ")[0]} ${user.name.split(" ").slice(-1)[0]}`}
               </p>

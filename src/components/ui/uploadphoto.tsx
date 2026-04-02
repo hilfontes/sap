@@ -1,54 +1,61 @@
 "use client";
 
-import { useState } from "react";
+import { CldUploadWidget, CldImage } from "next-cloudinary";
+import { useEffect, useState } from "react";
 
 export function UploadPhoto({ userId, currentPhoto }: any) {
-  const [preview, setPreview] = useState(currentPhoto);
-  const [file, setFile] = useState<File | null>(null);
+  const [photo, setPhoto] = useState(currentPhoto);
+  const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-  const handleChange = (e: any) => {
-    const selected = e.target.files[0];
-    if (selected) {
-      setFile(selected);
-      setPreview(URL.createObjectURL(selected));
-    }
-  };
+  useEffect(() => {
+    setPhoto(currentPhoto);
+  }, [currentPhoto]);
 
-  const handleUpload = async () => {
-    if (!file) return;
-
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const res = await fetch(`http://localhost:3001/users/${userId}/photo`, {
-      method: "POST",
-      body: formData,
+  async function updateUserPhoto(urlCompleto: string) {
+    await fetch(`${API_URL}/api/auth/updateuserphoto/${userId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ photo: urlCompleto }),
     });
-
-    const data = await res.json();
-
-    if (res.ok) {
-      setPreview(`http://localhost:3001/api/${data.photo}`);
-    }
-  };
+  }
 
   return (
     <div className="flex flex-col items-center gap-3">
-      <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-900">
+      {/* 📸 Preview */}
+      {photo ? (
         <img
-          src={preview || "/avatar-placeholder.png"}
-          className="w-full h-full object-cover"
+          src={photo}
+          className="w-28 h-28 rounded-full object-cover border"
+          alt="Foto"
         />
-      </div>
+      ) : (
+        <div className="w-28 h-28 rounded-full bg-gray-200 flex items-center justify-center">
+          Sem foto
+        </div>
+      )}
 
-      <input type="file" onChange={handleChange} />
+      {/* 📤 Upload */}
+      <CldUploadWidget
+        uploadPreset="uploadfontes"
+        options={{
+          cloudName: "dwwaom7gz",
+        }}
+        onSuccess={(result: any) => {
+          const urlCompleto = result.info.secure_url; // 🔥 URL da imagem
 
-      <button
-        onClick={handleUpload}
-        className="bg-blue-900 text-white px-3 py-1 rounded"
+          setPhoto(urlCompleto);
+          updateUserPhoto(urlCompleto);
+        }}
       >
-        Upload
-      </button>
+        {({ open }) => (
+          <button
+            onClick={() => open()}
+            className="bg-blue-900 text-white px-3 py-1 rounded-md"
+          >
+            Alterar Foto
+          </button>
+        )}
+      </CldUploadWidget>
     </div>
   );
 }
