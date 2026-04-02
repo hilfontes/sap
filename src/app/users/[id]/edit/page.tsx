@@ -30,7 +30,7 @@ type PageProps = {
 export default function EditUserPage({ params }: PageProps) {
   const { id } = use(params);
   const router = useRouter();
-
+  const [loaded, setLoaded] = useState(false);
   const [institutions, setInstitutions] = useState([]);
   const [provinces, setProvinces] = useState([]);
   const [specialities, setSpecialities] = useState([]);
@@ -41,65 +41,48 @@ export default function EditUserPage({ params }: PageProps) {
 
   // 🔹 carregar utilizador
   useEffect(() => {
-    async function loadUser() {
-      const res = await fetch(`${API_URL}/api/auth/users/${id}`);
+    async function loadAll() {
+      try {
+        const [userRes, instRes, provRes, specRes] = await Promise.all([
+          fetch(`${API_URL}/api/auth/users/${id}`),
+          fetch(`${API_URL}/api/institutions/getinstitutions`),
+          fetch(`${API_URL}/api/provinces/getprovinces`),
+          fetch(`${API_URL}/api/specialities/getspecialities`),
+        ]);
 
-      const data = await res.json();
-      console.log("Utilizador carregado:", data);
-      form.reset({
-        name: data.name,
-        email: data.email,
-        location: data.location,
-        address: data.address,
-        institutionId: data.institutionId?.toString(),
-        nif: data.nif,
-        cellphone: data.cellphone,
-        provinceId: data.provinceId,
-        specialityId: data.specialityId,
-        role: data.role,
-      });
+        const [user, instData, provData, specData] = await Promise.all([
+          userRes.json(),
+          instRes.json(),
+          provRes.json(),
+          specRes.json(),
+        ]);
+
+        // 🔥 primeiro preencher os selects
+        setInstitutions(instData);
+        setProvinces(Array.isArray(provData) ? provData : provData.data || []);
+        setSpecialities(
+          Array.isArray(specData) ? specData : specData.data || [],
+        );
+
+        // 🔥 depois resetar form
+        form.reset({
+          name: user.name,
+          email: user.email,
+          location: user.location,
+          address: user.address,
+          institutionId: user.institutionId?.toString(),
+          nif: user.nif,
+          cellphone: user.cellphone,
+          provinceId: user.provinceId?.toString(),
+          specialityId: user.specialityId?.toString(),
+        });
+      } catch (error) {
+        console.error("Erro ao carregar dados:", error);
+      }
     }
 
-    loadUser();
+    loadAll();
   }, [id]);
-
-  // 🔹 carregar instituições
-  useEffect(() => {
-    async function loadInstitutions() {
-      const res = await fetch(`${API_URL}/api/institutions/getinstitutions`);
-
-      const data = await res.json();
-      setInstitutions(data);
-      console.log("Instituições carregadas:", data);
-    }
-
-    loadInstitutions();
-  }, []);
-
-  // 🔹 carregar províncias
-  useEffect(() => {
-    async function loadProvinces() {
-      const res = await fetch(`${API_URL}/api/provinces/getprovinces`);
-
-      const data = await res.json();
-      setProvinces(Array.isArray(data) ? data : data.data || []);
-      console.log("Províncias carregadas:", data);
-    }
-
-    loadProvinces();
-  }, []);
-
-  useEffect(() => {
-    async function loadSpecialities() {
-      const res = await fetch(`${API_URL}/api/specialities/getspecialities`);
-
-      const data = await res.json();
-      setSpecialities(Array.isArray(data) ? data : data.data || []);
-      console.log("Especialidades carregadas:", data);
-    }
-
-    loadSpecialities();
-  }, []);
 
   const onSubmit = async (data: FormData) => {
     console.log("Dados do formulário:", data);
@@ -130,7 +113,7 @@ export default function EditUserPage({ params }: PageProps) {
       alert("Erro ao atualizar utilizador");
     }
   };
-  console.log("fordata", form.getValues());
+  //console.log("fordata", form.getValues());
   return (
     <>
       <Navbar />
@@ -195,7 +178,7 @@ export default function EditUserPage({ params }: PageProps) {
                 {...form.register("role")}
                 className="w-full border rounded-md p-2"
               />
-            </div>*/}
+            </div>
 
             {/* Província */}
             <div>

@@ -62,7 +62,7 @@ export default function UsersPage() {
           {/* Título */}
           <div className="flex flex-col">
             <span className="bg-blue-300 text-blue-800 text-xs font-medium px-5.5 py-1.5 rounded-full">
-              TOTAL ASSOCIADOS: {users.length}
+              TOTAL DE ASSOCIADOS: {users.length}
             </span>
           </div>
 
@@ -92,24 +92,24 @@ export default function UsersPage() {
 
         {/* 📊 Tabela */}
         <div className="overflow-x-auto">
-          <div className="rounded-xl overflow-hidden border border-gray-300 shadow-sm">
+          <div className="rounded-xl overflow-hidden border border-gray-100 shadow-sm">
             <table className="w-full border-separate border-spacing-0">
-              <thead className="bg-gray-500">
+              <thead className="bg-gray-200">
                 <tr>
-                  <th className="text-white p-3 text-left">Nome</th>
-                  <th className="text-white p-3 text-left">Email</th>
-                  <th className="text-white p-3 text-left">Localização</th>
+                  <th className="text-black p-3 text-left">Nome</th>
+                  <th className="text-black p-3 text-left">Email</th>
+                  <th className="text-black p-3 text-left">Localização</th>
 
-                  <th className="text-white p-3 text-left">Especialidade</th>
-                  <th className="text-white p-3 text-left">Ações</th>
+                  <th className="text-black p-3 text-left">Especialidade</th>
+                  <th className="text-black p-3 text-left">Ações</th>
                 </tr>
               </thead>
 
-              <tbody className="bg-gray-100">
+              <tbody className="bg-gray-50">
                 {paginatedUsers.map((user) => (
                   <tr
                     key={user.id}
-                    className="border-t border-gray-100 hover:bg-gray-300 transition"
+                    className="border-t border-gray-50 hover:bg-gray-100 transition"
                   >
                     <td className="p-3">{user.name}</td>
                     <td className="p-3">{user.email}</td>
