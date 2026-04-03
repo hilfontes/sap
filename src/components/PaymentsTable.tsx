@@ -3,6 +3,16 @@
 //import { PaymentsTable } from "@/components/PaymentsTable";
 import { useState } from "react";
 import { SendReceiptButton } from "@/components/SendReceiptButton";
+import {
+  Calendar,
+  DollarSign,
+  Coins,
+  Repeat,
+  CheckCircle,
+  Hash,
+  MailCheck,
+  Settings,
+} from "lucide-react";
 
 type Payment = {
   id: number;
@@ -33,14 +43,53 @@ export function PaymentsTable({ payments }: Props) {
       <table className="w-full border border-gray-200">
         <thead className="bg-blue-900">
           <tr>
-            <th className="text-white p-3 text-left">Mês/Ano</th>
-            <th className="text-white p-3 text-left">Valor</th>
-            <th className="text-white p-3 text-left">Moeda</th>
-            <th className="text-white p-3 text-left">Frequência</th>
-            <th className="text-white p-3 text-left">Estado</th>
-            <th className="text-white p-3 text-left">Referência</th>
-            <th className="text-white p-3 text-left">Recibo Enviado?</th>
-            <th className="text-white p-3 text-left">Ação</th>
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <Calendar size={16} /> Mês/Ano
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <DollarSign size={16} /> Valor
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <Coins size={16} /> Moeda
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <Repeat size={16} /> Frequência
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <CheckCircle size={16} /> Estado
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <Hash size={16} /> Referência
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <MailCheck size={16} /> Recibo Enviado?
+              </div>
+            </th>
+
+            <th className="text-white p-3 text-left">
+              <div className="flex items-center gap-2">
+                <Settings size={16} /> Ação
+              </div>
+            </th>
           </tr>
         </thead>
 

@@ -2,6 +2,7 @@
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { User, Mail, MapPin, Briefcase, Settings } from "lucide-react";
 
 type User = {
   id: number;
@@ -96,12 +97,35 @@ export default function UsersPage() {
             <table className="w-full border-separate border-spacing-0">
               <thead className="bg-gray-200">
                 <tr>
-                  <th className="text-black p-3 text-left">Nome</th>
-                  <th className="text-black p-3 text-left">Email</th>
-                  <th className="text-black p-3 text-left">Localização</th>
+                  <th className="text-black p-3 text-left border-r border-gray-300 last:border-r-0">
+                    <div className="flex items-center gap-2">
+                      <User size={16} /> Nome
+                    </div>
+                  </th>
 
-                  <th className="text-black p-3 text-left">Especialidade</th>
-                  <th className="text-black p-3 text-left">Ações</th>
+                  <th className="text-black p-3 text-left border-r border-gray-300 last:border-r-0">
+                    <div className="flex items-center gap-2">
+                      <Mail size={16} /> Email
+                    </div>
+                  </th>
+
+                  <th className="text-black p-3 text-left border-r border-gray-300 last:border-r-0">
+                    <div className="flex items-center gap-2">
+                      <MapPin size={16} /> Localização
+                    </div>
+                  </th>
+
+                  <th className="text-black p-3 text-left border-r border-gray-300 last:border-r-0">
+                    <div className="flex items-center gap-2">
+                      <Briefcase size={16} /> Especialidade
+                    </div>
+                  </th>
+
+                  <th className="text-black p-3 text-left">
+                    <div className="flex items-center gap-2">
+                      <Settings size={16} /> Ações
+                    </div>
+                  </th>
                 </tr>
               </thead>
 

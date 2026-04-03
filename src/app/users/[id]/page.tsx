@@ -5,6 +5,18 @@ import Link from "next/link";
 import { Plus, Settings } from "lucide-react";
 import { UploadPhoto } from "@/components/ui/uploadphoto";
 import { UserPhotoSection } from "@/components/ui/UserPhotoSection";
+import {
+  User,
+  Mail,
+  MapPin,
+  Flag,
+  ReceiptText,
+  Building2,
+  Briefcase,
+  Phone,
+  CreditCard,
+  BadgeCheck,
+} from "lucide-react";
 
 type Payment = {
   id: number;
@@ -17,6 +29,8 @@ type Payment = {
   sentReceipt: boolean;
   OBS?: string;
   createdAt: string;
+  paidAll: boolean;
+  feePayd: boolean;
 };
 
 type PageProps = {
@@ -52,7 +66,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
       <div className="p-6 space-y-8">
         <Link
           href={`/users/${id}/edit`}
-          className="bg-gray-700 text-white px-3 py-2 rounded-md hover:bg-gray-600 text-sm flex items-center gap-2 w-max"
+          className="bg-blue-950 text-white px-3 py-2 rounded-md hover:bg-black cursor-pointer text-sm flex items-center gap-2 w-max"
         >
           <Settings size={16} className="text-gray-300" />
           Editar Perfil
@@ -65,62 +79,105 @@ export default async function UserDetailsPage({ params }: PageProps) {
             <div className="absolute left-0 top-0 h-full w-1.5 bg-blue-900" />
 
             {/* Header */}
-            <div className="bg-blue-900 pl-8 pr-6 py-4">
+            {/*             <div className="bg-blue-900 pl-8 pr-6 py-4">
               <h1 className="text-lg font-semibold text-white">
                 Detalhes do Associado
               </h1>
-            </div>
+            </div> */}
 
             {/* Conteúdo */}
             <div className="p-6 pl-8 bg-gray-50">
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-5">
                 <div>
-                  <p className="text-sm text-gray-500">Nome</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <User size={14} /> Nome
+                  </p>
                   <p className="font-medium text-gray-900">{user.name}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Email</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <Mail size={14} /> Email
+                  </p>
                   <p className="font-medium text-gray-900">{user.email}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Localização</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <MapPin size={14} /> Localização
+                  </p>
                   <p className="font-medium text-gray-900">
-                    {user.provinceName}
+                    {user.provinceName ?? "—"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Nacionalidade</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <Flag size={14} /> Nacionalidade
+                  </p>
                   <p className="font-medium text-gray-900">
-                    {user.nationality ?? "—"}
+                    {user.nationalityName ?? "—"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">NIF</p>
-                  <p className="font-medium text-gray-900">{user.nif}</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <ReceiptText size={14} /> NIF
+                  </p>
+                  <p className="font-medium text-gray-900">{user.nif ?? "—"}</p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Instituição</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <Building2 size={14} /> Instituição
+                  </p>
                   <p className="font-medium text-gray-900">
                     {user.institution?.institutionName ?? "—"}
                   </p>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Especialidade</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <Briefcase size={14} /> Especialidade
+                  </p>
                   <span className="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
                     {user.speciality?.specialityName ?? "—"}
                   </span>
                 </div>
 
                 <div>
-                  <p className="text-sm text-gray-500">Telemóvel</p>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <BadgeCheck size={14} /> Cotas Regularizadas?
+                  </p>
+                  <span className="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
+                    {user.paidAll ? "Sim" : "Não"}
+                  </span>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <CreditCard size={14} /> Pagou a Joia?
+                  </p>
+                  <span className="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
+                    {user.feePayd ? "Sim" : "Não"}
+                  </span>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <Phone size={14} /> Telemóvel
+                  </p>
                   <p className="font-medium text-gray-900">
                     {user.cellphone ?? "—"}
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 flex items-center gap-2">
+                    <CreditCard size={14} /> Situação Financeira
+                  </p>
+                  <p className="font-medium text-gray-900">
+                    {user.financeStatus ?? "—"}
                   </p>
                 </div>
               </div>

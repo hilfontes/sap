@@ -7,6 +7,20 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Toaster, toast } from "sonner";
 import { Navbar } from "@/components/navbar";
+import {
+  Briefcase,
+  Building2,
+  CreditCard,
+  Flag,
+  Mail,
+  MapPin,
+  User,
+  LockIcon,
+  Paperclip,
+  ActivityIcon,
+  PiggyBank,
+  IdCardIcon,
+} from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
@@ -20,6 +34,11 @@ const schema = z.object({
   location: z.string(),
   role: z.string(),
   specialityId: z.string().min(1, "Selecione a especialidade"),
+  nationalityId: z.string().min(1, "Selecione a nacionalidade"),
+  feePayd: z.boolean(),
+  paidAll: z.boolean(),
+  financeStatus: z.string(),
+  nif: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -30,6 +49,7 @@ export default function CreateUserPage() {
   const [provinces, setProvinces] = useState([]);
   const [institutions, setInstitutions] = useState([]);
   const [specialities, setSpecialities] = useState([]);
+  const [nationalities, setNationalities] = useState([]);
 
   // 🔥 react-hook-form
   const {
@@ -58,6 +78,10 @@ export default function CreateUserPage() {
     fetch(`${API_URL}/api/specialities/getspecialities`)
       .then((res) => res.json())
       .then(setSpecialities);
+
+    fetch(`${API_URL}/api/nationalities/getnationalities`)
+      .then((res) => res.json())
+      .then(setNationalities);
   }, []);
 
   // 🚀 submit
@@ -77,6 +101,11 @@ export default function CreateUserPage() {
           provinceId: Number(data.provinceId),
           institutionId: Number(data.institutionId),
           specialityId: Number(data.specialityId),
+          nationalityId: Number(data.nationalityId),
+          feepayd: data.feePayd || false,
+          paidAll: data.paidAll || false,
+          financeStatus: data.financeStatus,
+          nif: data.nif,
         }),
       });
 
@@ -96,130 +125,233 @@ export default function CreateUserPage() {
   return (
     <>
       <Navbar />
+
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
         <Toaster position="top-right" />
 
-        {/* 💳 CARD */}
-        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg">
+        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl">
           <h1 className="text-2xl font-semibold mb-6 text-center">
             Novo Associado
           </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            {/* Nome */}
-            <div>
-              <input
-                placeholder="Nome"
-                {...register("name")}
-                className="w-full border p-2 rounded-md"
-              />
-              {errors.name && (
-                <p className="text-red-500 text-sm">{errors.name.message}</p>
-              )}
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            {/* ================= DADOS PESSOAIS ================= */}
+            <h3 className="text-md font-semibold text-blue-900">
+              Dados Pessoais
+            </h3>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Nome */}
+              <div>
+                <div className="relative">
+                  <User
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <input
+                    placeholder="Nome"
+                    {...register("name")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  />
+                </div>
+                {errors.name && (
+                  <p className="text-red-500 text-sm">{errors.name.message}</p>
+                )}
+              </div>
+
+              {/* NIF */}
+              <div>
+                <div className="relative">
+                  <IdCardIcon
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <input
+                    placeholder="nif"
+                    {...register("nif")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  />
+                </div>
+              </div>
+
+              {/* Email */}
+              <div>
+                <div className="relative">
+                  <Mail
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <input
+                    placeholder="Email"
+                    {...register("email")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  />
+                </div>
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email.message}</p>
+                )}
+              </div>
+
+              {/* Password */}
+              <div>
+                <div className="relative">
+                  <LockIcon
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                    size={18}
+                  />
+                  <input
+                    type="password"
+                    placeholder="Senha"
+                    {...register("password")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  />
+                </div>
+                {errors.password && (
+                  <p className="text-red-500 text-sm">
+                    {errors.password.message}
+                  </p>
+                )}
+              </div>
+
+              {/* Nacionalidade */}
+              <div>
+                <div className="relative">
+                  <Flag
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    size={18}
+                  />
+                  <select
+                    {...register("nationalityId")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  >
+                    <option value="">Selecionar nacionalidade</option>
+                    {nationalities.map((nat: any) => (
+                      <option key={nat.id} value={nat.id.toString()}>
+                        {nat.nationalityName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Província */}
+              <div>
+                <div className="relative">
+                  <MapPin
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    size={18}
+                  />
+                  <select
+                    {...register("provinceId")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  >
+                    <option value="">Selecionar Localização</option>
+                    {provinces.map((prov: any) => (
+                      <option key={prov.id} value={prov.id.toString()}>
+                        {prov.provinceName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
 
-            {/* Role */}
-            {/*
-            <div>
-              <input
-                placeholder="ASSOCIATE"
-                {...register("role")}
-                disabled
-                className="w-full border p-2 rounded-md"
-              />
-              {errors.role && (
-                <p className="text-red-500 text-sm">{errors.role.message}</p>
-              )}
-            </div>*/}
+            {/* ================= DADOS PROFISSIONAIS ================= */}
+            <h3 className="text-md font-semibold text-blue-900">
+              Dados Profissionais
+            </h3>
 
-            {/* Email */}
-            <div>
-              <input
-                placeholder="Email"
-                {...register("email")}
-                className="w-full border p-2 rounded-md"
-              />
-              {errors.email && (
-                <p className="text-red-500 text-sm">{errors.email.message}</p>
-              )}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Especialidade */}
+              <div>
+                <div className="relative">
+                  <Briefcase
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    size={18}
+                  />
+                  <select
+                    {...register("specialityId")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  >
+                    <option value="">Selecionar Especialidade</option>
+                    {specialities.map((spec: any) => (
+                      <option key={spec.id} value={spec.id.toString()}>
+                        {spec.specialityName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Instituição */}
+              <div>
+                <div className="relative">
+                  <Building2
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"
+                    size={18}
+                  />
+                  <select
+                    {...register("institutionId")}
+                    className="w-full border p-2 pl-10 rounded-md"
+                  >
+                    <option value="">Selecionar instituição</option>
+                    {institutions.map((inst: any) => (
+                      <option key={inst.id} value={inst.id.toString()}>
+                        {inst.institutionName}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
             </div>
 
-            {/* Password */}
-            <div>
-              <input
-                type="password"
-                placeholder="Senha"
-                {...register("password")}
-                className="w-full border p-2 rounded-md"
-              />
-              {errors.password && (
-                <p className="text-red-500 text-sm">
-                  {errors.password.message}
-                </p>
-              )}
-            </div>
+            {/* ================= INFORMAÇÃO FINANCEIRA ================= */}
+            <h3 className="text-md font-semibold text-blue-900">
+              Informação Financeira
+            </h3>
 
-            {/* Provincia */}
-            <div>
-              <select
-                {...register("provinceId")}
-                className="w-full border rounded-md p-2"
-              >
-                <option value="">Selecionar Localização actual</option>
-                {provinces.map((prov: any) => (
-                  <option key={prov.id} value={prov.id.toString()}>
-                    {prov.provinceName}
-                  </option>
-                ))}
-              </select>
-              {errors.provinceId && (
-                <p className="text-red-500 text-sm">
-                  {errors.provinceId.message}
-                </p>
-              )}
-            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {/* Quotas */}
+              <div className="flex items-center gap-2">
+                <CreditCard size={16} className="text-gray-500" />
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    {...register("paidAll")}
+                    className="form-checkbox h-5 w-5 text-blue-600"
+                  />
+                  Quotas Regularizadas
+                </label>
+              </div>
 
-            {/* Especialidade */}
-            <div>
-              <select
-                {...register("specialityId")}
-                className="w-full border rounded-md p-2"
-              >
-                <option value="">Selecionar a Especialidade</option>
-                {specialities.map((spec: any) => (
-                  <option key={spec.id} value={spec.id.toString()}>
-                    {spec.specialityName}
-                  </option>
-                ))}
-              </select>
-              {errors.specialityId && (
-                <p className="text-red-500 text-sm">
-                  {errors.specialityId.message}
-                </p>
-              )}
+              {/* Joia */}
+              <div className="flex items-center gap-2">
+                <PiggyBank size={16} className="text-gray-500" />
+                <label className="flex items-center gap-2">
+                  <input
+                    type="checkbox"
+                    {...register("feePayd")}
+                    className="form-checkbox h-5 w-5 text-blue-600"
+                  />
+                  Joia Paga
+                </label>
+              </div>
             </div>
-
-            {/* Instituição */}
+            {/* FinanceState */}
             <div>
-              <select
-                {...register("institutionId")}
-                className="w-full border rounded-md p-2"
-              >
-                <option value="">Selecionar instituição</option>
-                {institutions.map((inst: any) => (
-                  <option key={inst.id} value={inst.id.toString()}>
-                    {inst.institutionName}
-                  </option>
-                ))}
-              </select>
-              {errors.institutionId && (
-                <p className="text-red-500 text-sm">
-                  {errors.institutionId.message}
-                </p>
-              )}
+              <div className="relative">
+                <ActivityIcon
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <input
+                  placeholder="Situação Financeira"
+                  {...register("financeStatus")}
+                  className="w-full border p-2 pl-10 rounded-md"
+                />
+              </div>
             </div>
-
-            {/* Botões */}
+            {/* ================= BOTÕES ================= */}
             <div className="flex gap-2">
               <button
                 type="submit"

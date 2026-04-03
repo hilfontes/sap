@@ -50,7 +50,7 @@ export function UploadPhoto({ userId, currentPhoto }: any) {
         {({ open }) => (
           <button
             onClick={() => open()}
-            className="bg-blue-900 text-white px-3 py-1 rounded-md"
+            className="bg-blue-950 text-white px-3 py-1 rounded-md hover:bg-blue-700 cursor-pointer"
           >
             Alterar Foto
           </button>
