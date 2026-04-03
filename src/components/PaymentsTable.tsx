@@ -99,7 +99,7 @@ export function PaymentsTable({ payments }: Props) {
               <td className="p-3">{payment.monthYear}</td>
 
               <td className="p-3">
-                {payment.amount.toLocaleString()} {payment.currency}
+                {payment.amount.toLocaleString("pt-PT")} {payment.currency}
               </td>
 
               <td className="p-3">{payment.currency}</td>

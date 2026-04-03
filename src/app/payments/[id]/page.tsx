@@ -51,6 +51,7 @@ export default function PaymentsPage({ params }: PageProps) {
       },
       body: JSON.stringify({
         ...form,
+
         amount: Number(form.amount),
         currency: "AOA",
         status: "PENDENTE",

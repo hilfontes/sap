@@ -64,17 +64,10 @@ export default async function UserDetailsPage({ params }: PageProps) {
 
       <div className="p-6 pt-28"></div>
       <div className="p-6 space-y-8">
-        <Link
-          href={`/users/${id}/edit`}
-          className="bg-blue-950 text-white px-3 py-2 rounded-md hover:bg-black cursor-pointer text-sm flex items-center gap-2 w-max"
-        >
-          <Settings size={16} className="text-gray-300" />
-          Editar Perfil
-        </Link>
         {/* ================= USER ================= */}
-        <div className="flex flex-col lg:flex-row gap-6">
+        <div className="flex flex-col lg:flex-row gap-0">
           {/* ================= CARD ================= */}
-          <section className="relative flex-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden">
+          <section className="relative flex-1 bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden lg:rounded-r-none">
             {/* Barra lateral azul */}
             <div className="absolute left-0 top-0 h-full w-1.5 bg-blue-900" />
 
@@ -185,7 +178,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
           </section>
 
           {/* ================= FOTO ================= */}
-          <aside className="w-full lg:w-64 flex justify-center lg:justify-end">
+          <aside className="w-full lg:w-64 flex justify-center lg:rounded-l-none">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 flex flex-col items-center">
               <UploadPhoto userId={id} currentPhoto={user.photo} />
               <p className="font-semibold text-gray-800 text-center">
@@ -197,14 +190,23 @@ export default async function UserDetailsPage({ params }: PageProps) {
 
         {/* ================= PAYMENTS ================= */}
         <section>
-          <Link
-            //href="/payments"
-            href={`/payments/${id}`} // 🔹 Link atualizado
-            className="bg-blue-900 text-white px-3 py-4 rounded-md hover:bg-blue-850 text-sm flex items-center gap-2 w-max mb-6"
-          >
-            <Plus size={20} className="text-gray-300" />
-            Novo Pagamento
-          </Link>
+          <div className="flex gap-3 mb-4">
+            <Link
+              href={`/users/${id}/edit`}
+              className="w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm flex items-center justify-center gap-2"
+            >
+              <Settings size={16} className="text-gray-300" />
+              Editar Perfil
+            </Link>
+
+            <Link
+              href={`/payments/${id}`}
+              className="w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm flex items-center justify-center gap-2"
+            >
+              <Plus size={16} className="text-gray-300" />
+              Novo Pagamento
+            </Link>
+          </div>
 
           <PaymentsTable payments={payments} />
         </section>
