@@ -62,7 +62,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
     <>
       <Navbar />
 
-      <div className="p-6 pt-28"></div>
+      <div className="p-6 pt-8"></div>
       <div className="p-6 space-y-8">
         {/* ================= USER ================= */}
         <div className="flex flex-col lg:flex-row gap-0">
