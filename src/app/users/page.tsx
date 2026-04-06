@@ -2,7 +2,7 @@
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { User, Mail, MapPin, Briefcase, Settings } from "lucide-react";
+import { User, Mail, MapPin, Briefcase, Settings, Search } from "lucide-react";
 
 type User = {
   id: number;
@@ -70,16 +70,25 @@ export default function UsersPage() {
           {/* Grupo da direita */}
           <div className="flex items-center gap-3">
             {/* 🔍 Pesquisa */}
-            <input
-              type="text"
-              placeholder="Pesquisar por nome ou email..."
-              className="border p-2 rounded w-60 h-10"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setCurrentPage(1);
-              }}
-            />
+            <div className="relative w-64">
+              <Search
+                size={18}
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+              />
+
+              <input
+                type="text"
+                placeholder="Pesquisar por nome ou email..."
+                className="w-full h-10 pl-10 pr-3 rounded-full border border-gray-300 
+               focus:outline-none focus:ring-2 focus:ring-blue-900 
+               focus:border-blue-900 transition"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setCurrentPage(1);
+                }}
+              />
+            </div>
 
             {/* Botão */}
             <Link
