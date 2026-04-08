@@ -20,6 +20,7 @@ import {
   ActivityIcon,
   PiggyBank,
   IdCardIcon,
+  Phone,
 } from "lucide-react";
 
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
@@ -39,6 +40,7 @@ const schema = z.object({
   paidAll: z.boolean(),
   financeStatus: z.string(),
   nif: z.string(),
+  cellphone: z.string(),
 });
 
 type FormData = z.infer<typeof schema>;
@@ -106,6 +108,7 @@ export default function CreateUserPage() {
           paidAll: data.paidAll || false,
           financeStatus: data.financeStatus,
           nif: data.nif,
+          cellphone: data.cellphone,
         }),
       });
 
@@ -126,17 +129,17 @@ export default function CreateUserPage() {
     <>
       <Navbar />
 
-      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
+      <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 mt-10">
         <Toaster position="top-right" />
 
-        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl">
-          <h1 className="text-2xl font-semibold mb-6 text-center">
+        <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-3xl mb-2">
+          <h1 className="text-2xl font-semibold mb-2 text-center">
             Novo Associado
           </h1>
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             {/* ================= DADOS PESSOAIS ================= */}
-            <h3 className="text-md font-semibold text-blue-900">
+            <h3 className="text-md font-semibold text-blue-900 mb-2">
               Dados Pessoais
             </h3>
 
@@ -255,9 +258,23 @@ export default function CreateUserPage() {
                 </div>
               </div>
             </div>
+            {/* Celphone */}
+            <div>
+              <div className="relative">
+                <Phone
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={18}
+                />
+                <input
+                  placeholder="cellphone"
+                  {...register("cellphone")}
+                  className="w-85 border p-2 pl-10 rounded-md"
+                />
+              </div>
+            </div>
 
             {/* ================= DADOS PROFISSIONAIS ================= */}
-            <h3 className="text-md font-semibold text-blue-900">
+            <h3 className="text-md font-semibold text-blue-900 mb-2">
               Dados Profissionais
             </h3>
 
@@ -306,7 +323,7 @@ export default function CreateUserPage() {
             </div>
 
             {/* ================= INFORMAÇÃO FINANCEIRA ================= */}
-            <h3 className="text-md font-semibold text-blue-900">
+            <h3 className="text-md font-semibold text-blue-900 mb-2">
               Informação Financeira
             </h3>
 
