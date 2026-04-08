@@ -63,7 +63,7 @@ export default function UsersPage() {
           {/* Título */}
           <div className="flex flex-col">
             <span className="bg-blue-300 text-blue-800 text-xs font-medium px-5.5 py-1.5 rounded-full">
-              TOTAL DE ASSOCIADOS --: {users.length}
+              TOTAL DE ASSOCIADOS: {users.length}
             </span>
           </div>
 
