@@ -373,7 +373,7 @@ export default function CreateUserPage() {
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="flex-1 bg-blue-600 text-white p-2 rounded-md hover:bg-blue-700"
+                className="flex-1 bg-blue-600 text-white p-2 rounded-md hover:bg-black cursor-pointer hover:text-white"
               >
                 {isSubmitting ? "A criar..." : "Criar"}
               </button>
@@ -381,7 +381,7 @@ export default function CreateUserPage() {
               <button
                 type="button"
                 onClick={() => router.push("/users")}
-                className="flex-1 border p-2 rounded-md"
+                className="flex-1 border p-2 rounded-md hover:bg-black cursor-pointer hover:text-white"
               >
                 Cancelar
               </button>

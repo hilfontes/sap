@@ -146,10 +146,10 @@ export default function EditUserPage({ params }: PageProps) {
     <>
       <Navbar />
 
-      <div className="min-h-screen flex justify-center items-center bg-gray-100 p-10">
-        <form className="bg-white shadow-lg rounded-lg p-8 w-full max-w-3xl">
+      <div className="min-h-screen flex justify-center items-center bg-gray-100 p-2 mt-10">
+        <form className="bg-white shadow-lg rounded-lg p-4 w-full max-w-3xl">
           {/* ================= DADOS PESSOAIS ================= */}
-          <h3 className="text-lg font-semibold text-blue-900 mb-4">
+          <h3 className="text-lg font-semibold text-blue-900 mb-2">
             Dados Pessoais
           </h3>
 
