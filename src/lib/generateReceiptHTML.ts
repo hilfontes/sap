@@ -1,8 +1,8 @@
-export function generateReceiptHTML(payment: any) {
+export function generateReceiptHTML(payment: any, user: any) {
   return `
   <html>
     <head>
-      <title>Recibo</title>
+      <title>.</title>
 
       <style>
         @page {
@@ -160,16 +160,16 @@ export function generateReceiptHTML(payment: any) {
 
           <div class="client-grid">
             <div><strong>Nome:</strong></div>
-            <div>${payment.user?.name || "-"}</div>
+            <div>${user?.name || "-"}</div>
 
             <div><strong>NIF:</strong></div>
-            <div>${payment.user?.nif || "-"}</div>
+            <div>${user?.nif || "-"}</div>
 
             <div><strong>Telefone:</strong></div>
-            <div>${payment.user?.cellphone || "-"}</div>
+            <div>${user?.cellphone || "-"}</div>
 
             <div><strong>Província:</strong></div>
-            <div>${payment.user?.province || "-"}</div>
+            <div>${user?.province || "-"}</div>
           </div>
         </div>
 

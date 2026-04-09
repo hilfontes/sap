@@ -2,7 +2,7 @@
 
 //import { PaymentsTable } from "@/components/PaymentsTable";
 import { useState } from "react";
-import { SendReceiptButton } from "@/components/SendReceiptButton";
+//import { SendReceiptButton } from "@/components/SendReceiptButton";
 import { GeneratePDF } from "@/components/GeneratePDF";
 import {
   Calendar,
@@ -26,13 +26,21 @@ type Payment = {
   frequency: string;
   reference?: string;
   sentReceipt: boolean;
+
+  user?: {
+    name: string;
+    nif: string;
+    cellphone: string;
+    province: string;
+  };
 };
 
 type Props = {
   payments: Payment[];
+  user: any;
 };
 
-export function PaymentsTable({ payments }: Props) {
+export function PaymentsTable({ payments, user }: Props) {
   const [data, setData] = useState(payments);
   const [selectedHTML, setSelectedHTML] = useState<string | null>(null);
 
@@ -132,7 +140,7 @@ export function PaymentsTable({ payments }: Props) {
                   {payment.sentReceipt ? (
                     <span className="text-green-700 font-medium">-</span>
                   ) : (
-                    <GeneratePDF html={generateReceiptHTML(payment)} />
+                    <GeneratePDF html={generateReceiptHTML(payment, user)} />
                   )}
                 </td>
               </tr>

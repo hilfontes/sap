@@ -140,7 +140,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
 
                 <div>
                   <p className="text-sm text-gray-500 flex items-center gap-2">
-                    <BadgeCheck size={14} /> Cotas Regularizadas?
+                    <BadgeCheck size={14} /> Quotas Regularizadas?
                   </p>
                   <span className="inline-block mt-1 px-3 py-1 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">
                     {user.paidAll ? "Sim" : "Não"}
@@ -208,7 +208,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
             </Link>
           </div>
 
-          <PaymentsTable payments={payments} />
+          <PaymentsTable payments={payments} user={user} />
         </section>
       </div>
     </>
