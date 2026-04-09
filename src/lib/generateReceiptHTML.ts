@@ -9,7 +9,10 @@ export function generateReceiptHTML(payment: any, user: any) {
           size: A4;
           margin: 20mm;
         }
-
+        .logo img {
+            width: 80px;
+            height: auto;
+        }
         body {
           font-family: Arial, sans-serif;
           font-size: 12px;
@@ -23,19 +26,42 @@ export function generateReceiptHTML(payment: any, user: any) {
 
         /* ================= HEADER ================= */
         .header {
-          display: flex;
-          justify-content: space-between;
-          border-bottom: 2px solid #000;
-          padding-bottom: 10px;
-        }
-
-        .company {
-          max-width: 60%;
-        }
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+}
+  /* LEFT SIDE (logo + empresa em coluna) */
+.left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 60%;
+}
+  .logo img {
+  width: 80px;
+  height: auto;
+  display: block;
+}
 
         .company strong {
-          font-size: 14px;
-        }
+  font-size: 14px;
+}
+/* RIGHT SIDE (recibo alinhado à direita) */
+.right {
+  text-align: right;
+  min-width: 150px;
+}
+
+.right h1 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.right p {
+  margin: 2px 0;
+}
 
         .company p {
           margin: 2px 0;
@@ -139,20 +165,30 @@ export function generateReceiptHTML(payment: any, user: any) {
       <div class="container">
 
         <!-- HEADER -->
-        <div class="header">
-          <div class="company">
-            <strong>Sociedade Angolana de Pediatria</strong>
-            <p>NIF: 500000000</p>
-            <p>Luanda, Angola</p>
-            <p>Email: sap@sapangola.com</p>
-          </div>
+       <div class="header">
 
-          <div class="doc-info">
-            <h1>RECIBO</h1>
-            <p><strong>Nº:</strong> ${payment.reference || "0000"}</p>
-            <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
-          </div>
-        </div>
+  <!-- LEFT -->
+  <div class="left">
+    <div class="logo">
+      <img src="${window.location.origin}/logo.png" />
+    </div>
+
+    <div class="company">
+      <strong>Sociedade Angolana de Pediatria</strong>
+      <p>NIF: 500000000</p>
+      <p>Luanda, Angola</p>
+      <p>Email: sap@sapangola.com</p>
+    </div>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+    <h1>RECIBO</h1>
+    <p><strong>Nº:</strong> ${payment.reference || "0000"}</p>
+    <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
+  </div>
+
+</div>
 
         <!-- CLIENTE -->
         <div class="client-box">
@@ -169,7 +205,7 @@ export function generateReceiptHTML(payment: any, user: any) {
             <div>${user?.cellphone || "-"}</div>
 
             <div><strong>Província:</strong></div>
-            <div>${user?.province || "-"}</div>
+            <div>${user?.provinceName || "-"}</div>
           </div>
         </div>
 
