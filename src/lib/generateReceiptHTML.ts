@@ -3,86 +3,214 @@ export function generateReceiptHTML(payment: any) {
   <html>
     <head>
       <title>Recibo</title>
+
       <style>
-        body {
-          font-family: Arial;
-          padding: 40px;
+        @page {
+          size: A4;
+          margin: 20mm;
         }
 
+        body {
+          font-family: Arial, sans-serif;
+          font-size: 12px;
+          color: #000;
+          margin: 0;
+        }
+
+        .container {
+          width: 100%;
+        }
+
+        /* ================= HEADER ================= */
         .header {
           display: flex;
           justify-content: space-between;
-        }
-
-        .left img {
-          width: 80px;
+          border-bottom: 2px solid #000;
+          padding-bottom: 10px;
         }
 
         .company {
-          margin-top: 10px;
+          max-width: 60%;
+        }
+
+        .company strong {
           font-size: 14px;
         }
 
-        .right {
+        .company p {
+          margin: 2px 0;
+        }
+
+        .doc-info {
           text-align: right;
         }
 
+        .doc-info h1 {
+          margin: 0;
+          font-size: 20px;
+        }
+
+        .doc-info p {
+          margin: 2px 0;
+        }
+
+        /* ================= CLIENT ================= */
+        .client-box {
+          margin-top: 20px;
+          border: 1px solid #000;
+          padding: 10px;
+        }
+
+        .client-title {
+          font-weight: bold;
+          margin-bottom: 6px;
+          text-transform: uppercase;
+        }
+
+        .client-grid {
+          display: grid;
+          grid-template-columns: 120px 1fr 120px 1fr;
+          gap: 4px 10px;
+        }
+
+        /* ================= TABLE ================= */
         .table {
-          margin-top: 40px;
+          margin-top: 20px;
           width: 100%;
           border-collapse: collapse;
         }
 
-        .table th, .table td {
-          border: 1px solid #ccc;
+        .table th {
+          border: 1px solid #000;
+          padding: 6px;
+          background: #eee;
+          text-align: left;
+        }
+
+        .table td {
+          border: 1px solid #000;
+          padding: 6px;
+        }
+
+        /* ================= TOTAL ================= */
+        .totals {
+          margin-top: 20px;
+          width: 100%;
+          display: flex;
+          justify-content: flex-end;
+        }
+
+        .totals-box {
+          width: 250px;
+          border: 1px solid #000;
           padding: 10px;
         }
 
-        .footer {
-          margin-top: 60px;
-          text-align: center;
-          font-size: 12px;
-          color: gray;
+        .totals-row {
+          display: flex;
+          justify-content: space-between;
+          margin-bottom: 4px;
         }
+
+        .totals-row.total {
+          font-weight: bold;
+          border-top: 1px solid #000;
+          padding-top: 5px;
+        }
+
+        /* ================= FOOTER ================= */
+        .footer {
+          margin-top: 40px;
+          text-align: center;
+          font-size: 11px;
+        }
+
+        /* PRINT FIX */
+        @media print {
+          .container {
+            page-break-inside: avoid;
+          }
+        }
+
       </style>
     </head>
 
     <body>
-      <div class="header">
-        <div class="left">
-          <img src="/logo.png" />
+      <div class="container">
+
+        <!-- HEADER -->
+        <div class="header">
           <div class="company">
-            <strong>Minha Empresa</strong><br/>
-            Luanda, Angola
+            <strong>Sociedade Angolana de Pediatria</strong>
+            <p>NIF: 500000000</p>
+            <p>Luanda, Angola</p>
+            <p>Email: sap@sapangola.com</p>
+          </div>
+
+          <div class="doc-info">
+            <h1>RECIBO</h1>
+            <p><strong>Nº:</strong> ${payment.reference || "0000"}</p>
+            <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
           </div>
         </div>
 
-        <div class="right">
-          <h2>RECIBO</h2>
-          <p>Ref: ${payment.reference || "-"}</p>
+        <!-- CLIENTE -->
+        <div class="client-box">
+          <div class="client-title">Dados do Associado</div>
+
+          <div class="client-grid">
+            <div><strong>Nome:</strong></div>
+            <div>${payment.user?.name || "-"}</div>
+
+            <div><strong>NIF:</strong></div>
+            <div>${payment.user?.nif || "-"}</div>
+
+            <div><strong>Telefone:</strong></div>
+            <div>${payment.user?.cellphone || "-"}</div>
+
+            <div><strong>Província:</strong></div>
+            <div>${payment.user?.province || "-"}</div>
+          </div>
         </div>
-      </div>
 
-      <table class="table">
-        <tr>
-          <th>Mês/Ano</th>
-          <th>Frequência</th>
-          <th>Valor</th>
-          <th>Moeda</th>
-          <th>Data</th>
-        </tr>
+        <!-- TABELA -->
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Descrição</th>
+              <th>Mês/Ano</th>
+              <th>Frequência</th>
+              <th>Valor</th>
+              <th>Moeda</th>
+            </tr>
+          </thead>
 
-        <tr>
-          <td>${payment.monthYear}</td>
-          <td>${payment.frequency}</td>
-          <td>${payment.amount}</td>
-          <td>${payment.currency}</td>
-          <td>${new Date().toLocaleDateString()}</td>
-        </tr>
-      </table>
+          <tbody>
+            <tr>
+              <td>Pagamento de quota</td>
+              <td>${payment.monthYear}</td>
+              <td>${payment.frequency}</td>
+              <td>${payment.amount}</td>
+              <td>${payment.currency}</td>
+            </tr>
+          </tbody>
+        </table>
 
-      <div class="footer">
-        Processado por computador
+        <!-- TOTAL -->
+        <div class="totals">
+          <div class="totals-box">
+            <div class="totals-row total">
+              <span>Total:</span>
+              <span>${payment.amount} ${payment.currency}</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+          Documento processado por computador • Válido sem assinatura
+        </div>
+
       </div>
     </body>
   </html>

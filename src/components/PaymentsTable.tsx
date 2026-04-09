@@ -130,14 +130,9 @@ export function PaymentsTable({ payments }: Props) {
 
                 <td className="p-3">
                   {payment.sentReceipt ? (
-                    <span className="text-green-700 font-medium">Enviado</span>
+                    <span className="text-green-700 font-medium">-</span>
                   ) : (
-                    <GeneratePDF
-                      onPreview={() => {
-                        const html = generateReceiptHTML(payment);
-                        setSelectedHTML(html);
-                      }}
-                    />
+                    <GeneratePDF html={generateReceiptHTML(payment)} />
                   )}
                 </td>
               </tr>
