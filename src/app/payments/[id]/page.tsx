@@ -9,13 +9,17 @@ type PageProps = {
 };
 
 export default function PaymentsPage({ params }: PageProps) {
-  const router = useRouter(); // 👈 aqui
-  const { id } = use(params); // ✅ nova forma do Next.js
+  //const today = new Date().toISOString().split("T")[0];
+  const router = useRouter();
+  const { id } = use(params);
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
   const [form, setForm] = useState({
     amount: "",
     frequency: "MONTHLY",
     monthYear: "",
+    paymentDate: "", // ✅ novo campo
+    reference: "",
     OBS: "",
   });
 
@@ -51,7 +55,6 @@ export default function PaymentsPage({ params }: PageProps) {
       },
       body: JSON.stringify({
         ...form,
-
         amount: Number(form.amount),
         currency: "AOA",
         status: "PENDENTE",
@@ -60,7 +63,7 @@ export default function PaymentsPage({ params }: PageProps) {
     });
 
     console.log("Resposta:", await res.json());
-
+    if (!res.ok) return;
     if (res.ok) {
       alert("Pagamento registado!");
       router.push(`/users/${id}`);
@@ -101,6 +104,15 @@ export default function PaymentsPage({ params }: PageProps) {
             onChange={handleChange}
             className="w-full border rounded-md p-2"
           />
+
+          {/* ✅ novo campo data de pagamento */}
+          <input
+            type="date"
+            name="paymentDate"
+            onChange={handleChange}
+            className="w-full border rounded-md p-2"
+          />
+
           <input
             type="text"
             name="reference"
@@ -108,6 +120,7 @@ export default function PaymentsPage({ params }: PageProps) {
             onChange={handleChange}
             className="w-full border rounded-md p-2"
           />
+
           <textarea
             name="OBS"
             placeholder="Observação"
@@ -115,9 +128,23 @@ export default function PaymentsPage({ params }: PageProps) {
             className="w-full border rounded-md p-2"
           />
 
-          <button className="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-800">
-            Pagar
-          </button>
+          {/* ✅ botões lado a lado */}
+          <div className="flex gap-4">
+            <button
+              type="submit"
+              className="w-full bg-blue-900 text-white py-2 rounded-md hover:bg-blue-800"
+            >
+              Gravar Pagamento
+            </button>
+
+            <button
+              type="button"
+              onClick={() => router.push(`/users/${id}`)}
+              className="w-full bg-gray-400 text-white py-2 rounded-md hover:bg-gray-500"
+            >
+              Cancelar
+            </button>
+          </div>
         </form>
       </div>
     </>

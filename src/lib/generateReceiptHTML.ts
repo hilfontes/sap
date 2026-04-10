@@ -1,4 +1,8 @@
+import { numberToWords } from "@/lib/numberToWords";
 export function generateReceiptHTML(payment: any, user: any) {
+  
+
+const valorExtenso = numberToWords(payment.amount);
   return `
   <html>
     <head>
@@ -239,11 +243,13 @@ export function generateReceiptHTML(payment: any, user: any) {
               <span>Total:</span>
               <span>${payment.amount} ${payment.currency}</span>
             </div>
+             <p><strong>São: </strong> ${valorExtenso}</p>
           </div>
         </div>
 
         <!-- FOOTER -->
         <div class="footer">
+       
           Documento processado por computador • Válido sem assinatura
         </div>
 
