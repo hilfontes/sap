@@ -25,16 +25,20 @@ export default function PaymentsPage({ params }: PageProps) {
 
   useEffect(() => {
     async function loadUser() {
-      const res = await fetch(`${API_URL}/api/auth/eu`, {
-        credentials: "include",
-      });
+      try {
+        const res = await fetch(`${API_URL}/api/auth/eu`, {
+          credentials: "include",
+        });
 
-      if (!res.ok) return;
+        if (!res.ok) return;
 
-      const data = await res.json();
-      console.log("Utilizador logado:", data);
+        const data = await res.json();
+        console.log("Utilizador logado:", data);
+      } catch (error) {
+        console.error("Erro ao carregar usuário:", error);
+        //location.href = "/";
+      }
     }
-
     loadUser();
   }, []);
 
@@ -111,6 +115,7 @@ export default function PaymentsPage({ params }: PageProps) {
             name="paymentDate"
             onChange={handleChange}
             className="w-full border rounded-md p-2"
+            lang="pt"
           />
 
           <input

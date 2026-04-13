@@ -43,10 +43,10 @@ export function Navbar() {
             Contactos
           </Link>
           <Link
-            href="/about"
+            href="/dashboard"
             className="text-white hover:text-blue-300 transition-colors"
           >
-            Acerca
+            Dashboard
           </Link>
 
           <Link
