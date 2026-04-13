@@ -14,6 +14,7 @@ import {
   MailCheck,
   Settings,
   CheckCheckIcon,
+  Receipt,
 } from "lucide-react";
 import { generateReceiptHTML } from "@/lib/generateReceiptHTML";
 import { ReceiptModal } from "./ReceiptModal";
@@ -125,7 +126,7 @@ export function PaymentsTable({ payments, user }: Props) {
 
               <th className="text-white p-3 text-left">
                 <div className="flex items-center gap-2">
-                  <Settings size={16} /> Ação
+                  <Receipt size={16} /> Ação
                 </div>
               </th>
             </tr>
@@ -147,7 +148,7 @@ export function PaymentsTable({ payments, user }: Props) {
                 <td className="p-3">
                   <span
                     className={`px-2 py-1 rounded text-sm ${
-                      payment.status === "PAID"
+                      payment.status === "PAGO"
                         ? "bg-green-100 text-green-700"
                         : "bg-yellow-100 text-yellow-700"
                     }`}
@@ -169,11 +170,7 @@ export function PaymentsTable({ payments, user }: Props) {
                       Confirmar
                     </button>
                   )}
-
-                  {/* GERAR RECIBO */}
-                  {!payment.sentReceipt && payment.status === "PAID" && (
-                    <GeneratePDF html={generateReceiptHTML(payment, user)} />
-                  )}
+                  -
                 </td>
 
                 <td className="p-3">
