@@ -13,6 +13,7 @@ import {
   Hash,
   MailCheck,
   Settings,
+  CheckCheckIcon,
 } from "lucide-react";
 import { generateReceiptHTML } from "@/lib/generateReceiptHTML";
 import { ReceiptModal } from "./ReceiptModal";
@@ -41,6 +42,7 @@ type Props = {
 };
 
 export function PaymentsTable({ payments, user }: Props) {
+  const [confirmId, setConfirmId] = useState<number | null>(null);
   const [data, setData] = useState(payments);
   const [selectedHTML, setSelectedHTML] = useState<string | null>(null);
 
@@ -48,6 +50,29 @@ export function PaymentsTable({ payments, user }: Props) {
     setData((prev) =>
       prev.map((p) => (p.id === id ? { ...p, sentReceipt: true } : p)),
     );
+  }
+
+  const [loadingId, setLoadingId] = useState<number | null>(null);
+
+  async function confirmPayment(id: number) {
+    setLoadingId(id);
+
+    try {
+      const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+      const res = await fetch(`${API_URL}/api/payment/${id}/confirm`, {
+        method: "PATCH",
+      });
+
+      if (!res.ok) throw new Error();
+
+      setData((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, status: "PAGO" } : p)),
+      );
+    } catch {
+      alert("Erro ao confirmar pagamento");
+    } finally {
+      setLoadingId(null);
+    }
   }
 
   return (
@@ -94,7 +119,7 @@ export function PaymentsTable({ payments, user }: Props) {
 
               <th className="text-white p-3 text-left">
                 <div className="flex items-center gap-2">
-                  <MailCheck size={16} /> Recibo Enviado?
+                  <CheckCheckIcon size={16} /> Pagamento?
                 </div>
               </th>
 
@@ -134,14 +159,37 @@ export function PaymentsTable({ payments, user }: Props) {
                 <td className="p-3">{payment.reference ?? "-"}</td>
 
                 {/* ✅ Campo atualizado */}
-                <td className="p-3">{payment.sentReceipt ? "Sim" : "Não"}</td>
+                <td className="h-14 p-3 flex gap-2">
+                  {/* BOTÃO CONFIRMAR PAGAMENTO */}
+                  {payment.status !== "PAGO" && (
+                    <button
+                      onClick={() => setConfirmId(payment.id)}
+                      className="h-8 px-3 bg-green-600 text-white text-xs rounded hover:bg-green-800"
+                    >
+                      Confirmar
+                    </button>
+                  )}
 
-                <td className="p-3">
-                  {payment.sentReceipt ? (
-                    <span className="text-green-700 font-medium">-</span>
-                  ) : (
+                  {/* GERAR RECIBO */}
+                  {!payment.sentReceipt && payment.status === "PAID" && (
                     <GeneratePDF html={generateReceiptHTML(payment, user)} />
                   )}
+                </td>
+
+                <td className="p-3">
+                  <div className="h-8 flex items-center">
+                    {payment.status === "PAGO" ? (
+                      payment.sentReceipt ? (
+                        <span className="text-green-700 font-medium">-</span>
+                      ) : (
+                        <GeneratePDF
+                          html={generateReceiptHTML(payment, user)}
+                        />
+                      )
+                    ) : (
+                      <span className="text-gray-400 text-sm">-</span>
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
@@ -154,6 +202,36 @@ export function PaymentsTable({ payments, user }: Props) {
           html={selectedHTML}
           onClose={() => setSelectedHTML(null)}
         />
+      )}
+      {confirmId && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg shadow-lg p-6 w-80">
+            <h2 className="text-lg font-semibold mb-4">Confirmar pagamento</h2>
+
+            <p className="text-sm text-gray-600 mb-6">
+              Tens certeza que desejas confirmar este pagamento?
+            </p>
+
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setConfirmId(null)}
+                className="px-4 py-2 text-sm border rounded-md hover:bg-gray-100"
+              >
+                Cancelar
+              </button>
+
+              <button
+                onClick={async () => {
+                  await confirmPayment(confirmId);
+                  setConfirmId(null);
+                }}
+                className="px-4 py-2 text-sm bg-green-600 text-white rounded-md hover:bg-green-800"
+              >
+                Confirmar
+              </button>
+            </div>
+          </div>
+        </div>
       )}
     </>
   );

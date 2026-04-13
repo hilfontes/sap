@@ -3,16 +3,15 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import StatsCards from "../../components/StatsCards";
-import { env } from "process";
 
 export default function DashboardPage() {
   const [data, setData] = useState<any>(null);
 
   useEffect(() => {
-    const API_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+    const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
     axios
       //.get("http://localhost:3000/dashboard/stats")
-      .get(`${API_URL}/dashboard/stats`)
+      .get(`${API_URL}/api/dashboard/stats`)
       .then((res) => setData(res.data))
       .catch((err) => console.error(err));
   }, []);
