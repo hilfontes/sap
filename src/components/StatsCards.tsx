@@ -16,7 +16,7 @@ export default function StatsCards({ title, data }: any) {
           <div
             key={index}
             style={{
-              background: "#ffffff",
+              background: "#6EE7B7",
               padding: 20,
               borderRadius: 12,
               boxShadow: "0 2px 10px rgba(0,0,0,0.08)",
