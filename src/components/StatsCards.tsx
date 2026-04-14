@@ -1,6 +1,6 @@
 "use client";
 
-export default function StatsCards({ title, data }: any) {
+export default function StatsCards({ title, data, color }: any) {
   return (
     <div style={{ marginBottom: 40 }}>
       <h2 style={{ marginBottom: 16 }}>{title}</h2>
@@ -16,7 +16,7 @@ export default function StatsCards({ title, data }: any) {
           <div
             key={index}
             style={{
-              background: "#6EE7B7",
+              background: color,
               padding: 20,
               borderRadius: 12,
               boxShadow: "0 2px 10px rgba(0,0,0,0.08)",

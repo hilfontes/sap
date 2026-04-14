@@ -83,11 +83,23 @@ export default function DashboardPage() {
           <h1 style={{ fontSize: 32 }}>{data.feePaydCount}</h1>
         </div>
       </div>
-      <StatsCards title="Top 5 Nacionalidades" data={nationalityData} />
+      <StatsCards
+        title="Top 5 Nacionalidades"
+        data={nationalityData}
+        color="#BFDBFE"
+      />
 
-      <StatsCards title="Top 5 Províncias" data={provinceData} />
+      <StatsCards
+        title="Top 5 Províncias"
+        data={provinceData}
+        color="#FECACA"
+      />
 
-      <StatsCards title="Top 5 Especialidades" data={specialityData} />
+      <StatsCards
+        title="Top 5 Especialidades"
+        data={specialityData}
+        color="#E9D5FF"
+      />
     </div>
   );
 }
