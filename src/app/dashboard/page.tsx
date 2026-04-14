@@ -16,7 +16,7 @@ export default function DashboardPage() {
       .catch((err) => console.error(err));
   }, []);
 
-  if (!data) return <p>Loading...</p>;
+  if (!data) return <p>Carregando...</p>;
 
   // 🔹 Formatar dados
   const nationalityData = data.usersByNationality.map((item: any) => ({
@@ -37,19 +37,51 @@ export default function DashboardPage() {
   return (
     <div style={{ padding: 30 }}>
       <h1 style={{ marginBottom: 30 }}>📊 Dashboard</h1>
+
       {/* KPI */}
-      <div
-        style={{
-          marginTop: 40,
-          padding: 20,
-          background: "#4CAF50",
-          color: "#fff",
-          borderRadius: 12,
-          width: 250,
-        }}
-      >
-        <p>Sit. Financeira Regularizada</p>
-        <h1 style={{ fontSize: 32 }}>{data.paidAllCount}</h1>
+
+      <div className="flex" style={{ gap: 20 }}>
+        <div
+          style={{
+            marginTop: 40,
+            padding: 20,
+            background: "#059669",
+            color: "#fff",
+            borderRadius: 12,
+            width: 250,
+          }}
+        >
+          <p>Total de Associados</p>
+          <h1 style={{ fontSize: 32 }}>{data.associateCount}</h1>
+        </div>
+
+        <div
+          style={{
+            marginTop: 40,
+            padding: 20,
+            background: "#10B981",
+            color: "#fff",
+            borderRadius: 12,
+            width: 250,
+          }}
+        >
+          <p>Sit. Financeira Regularizada</p>
+          <h1 style={{ fontSize: 32 }}>{data.paidAllCount}</h1>
+        </div>
+
+        <div
+          style={{
+            marginTop: 40,
+            padding: 20,
+            background: "#6EE7B7",
+            color: "#fff",
+            borderRadius: 12,
+            width: 250,
+          }}
+        >
+          <p>Joia Paga</p>
+          <h1 style={{ fontSize: 32 }}>{data.feePaydCount}</h1>
+        </div>
       </div>
       <StatsCards title="Top 5 Nacionalidades" data={nationalityData} />
 
