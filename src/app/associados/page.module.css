@@ -1,0 +1,111 @@
+.container {
+  padding: 20px;
+}
+
+.printButton {
+  margin-bottom: 20px;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed; /* IMPORTANTE */
+}
+
+.th,
+.td {
+  border: 1px solid black;
+  padding: 8px;
+}
+
+/* Distribuição das colunas */
+.colName {
+  width: 55%;
+  text-align: left;
+}
+
+.colCellphone {
+  width: 15%;
+  text-align: center;
+}
+
+.colEmail {
+  width: 30%;
+  text-align: right;
+}
+
+/* Impressão */
+@media print {
+  .printButton {
+    display: none;
+
+    
+  }
+
+  .thead tr {
+    background-color: #e5e7eb !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+  }
+
+  .table {
+    margin-top: 100px;
+  }
+}
+
+/* HEADER */
+.header {
+  margin-bottom: 20px;
+}
+
+/* linha do topo */
+.headerTop {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+/* LOGO */
+.logo {
+  width: 60px;
+  height: auto;
+}
+
+/* texto do header */
+.headerText h1 {
+  margin: 0;
+  font-size: 20px;
+}
+
+.headerText p {
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+/* BOTÃO */
+.printButton {
+  margin-bottom: 20px;
+  padding: 10px 15px;
+  background-color: #0d6efd;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.printButton:hover {
+  background-color: #0b5ed7;
+}
+
+.thead tr {
+  background-color: #e5e7eb; /* cinza claro */
+  color: #111;
+}

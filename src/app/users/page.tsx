@@ -2,7 +2,16 @@
 import { Navbar } from "@/components/navbar";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { User, Mail, MapPin, Briefcase, Settings, Search } from "lucide-react";
+import {
+  User,
+  Mail,
+  MapPin,
+  Briefcase,
+  Settings,
+  Search,
+  PlusIcon,
+  Plus,
+} from "lucide-react";
 
 type User = {
   id: number;
@@ -30,6 +39,7 @@ type User = {
 const ITEMS_PER_PAGE = 15;
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 export default function UsersPage() {
+  const [openModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -95,7 +105,7 @@ export default function UsersPage() {
               href="/users/create"
               className="h-10 flex items-center bg-blue-900 text-white px-4 rounded-md hover:bg-blue-800 text-sm"
             >
-              + Novo Associado
+              <PlusIcon className="mr-4" /> Novo Associado
             </Link>
           </div>
         </div>
@@ -195,6 +205,31 @@ export default function UsersPage() {
             Próxima
           </button>
         </div>
+      </div>
+      <div id="print-area" className="bg-white p-6">
+        <h1 className="text-xl font-bold mb-2">Lista de Associados</h1>
+
+        <p className="text-sm text-gray-600 mb-4">
+          Gerado em {new Date().toLocaleDateString()}
+        </p>
+
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="border-b">
+              <th className="text-left py-2">Nome</th>
+              <th className="text-left py-2">Email</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {users.map((user) => (
+              <tr key={user.id} className="border-b">
+                <td className="py-2">{user.name}</td>
+                <td className="py-2">{user.email}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
     </>
   );

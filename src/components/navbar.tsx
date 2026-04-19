@@ -43,6 +43,12 @@ export function Navbar() {
             Contactos
           </Link>
           <Link
+            href="/associados"
+            className="text-white hover:text-blue-300 transition-colors"
+          >
+            Lista
+          </Link>
+          <Link
             href="/dashboard"
             className="text-white hover:text-blue-300 transition-colors"
           >
