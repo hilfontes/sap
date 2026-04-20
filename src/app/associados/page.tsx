@@ -58,9 +58,9 @@ export default function AssociadosPage() {
           <thead className={styles.thead}>
             <tr>
               <th className={`${styles.th} ${styles.colName}`}>Nome</th>
-              <th className={`${styles.th} ${styles.colCellphone}`}>
+              {/* <th className={`${styles.th} ${styles.colCellphone}`}>
                 Telefone
-              </th>
+              </th> */}
               <th className={`${styles.th} ${styles.colEmail}`}>Email</th>
             </tr>
           </thead>
@@ -72,9 +72,9 @@ export default function AssociadosPage() {
                   {user.name}
                 </td>
 
-                <td className={`${styles.td} ${styles.colCellphone}`}>
+                {/* <td className={`${styles.td} ${styles.colCellphone}`}>
                   {user.cellphone}
-                </td>
+                </td> */}
 
                 <td className={`${styles.td} ${styles.colEmail}`}>
                   {user.email}

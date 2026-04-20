@@ -2,7 +2,7 @@ import { Navbar } from "@/components/navbar";
 import { SendReceiptButton } from "@/components/SendReceiptButton";
 import { PaymentsTable } from "@/components/PaymentsTable";
 import Link from "next/link";
-import { Plus, Settings } from "lucide-react";
+import { Plus, PrinterIcon, Settings } from "lucide-react";
 import { UploadPhoto } from "@/components/ui/uploadphoto";
 import { UserPhotoSection } from "@/components/ui/UserPhotoSection";
 import {
@@ -205,6 +205,14 @@ export default async function UserDetailsPage({ params }: PageProps) {
             >
               <Plus size={16} className="text-gray-300" />
               Novo Pagamento
+            </Link>
+
+            <Link
+              href={"/associados"}
+              className="w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm flex items-center justify-center gap-2"
+            >
+              <PrinterIcon size={16} className="text-gray-300" />
+              Lista Impressão
             </Link>
           </div>
 
