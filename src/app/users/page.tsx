@@ -213,31 +213,6 @@ export default function UsersPage() {
           </button>
         </div>
       </div>
-      <div id="print-area" className="bg-white p-6">
-        <h1 className="text-xl font-bold mb-2">Lista de Associados</h1>
-
-        <p className="text-sm text-gray-600 mb-4">
-          Gerado em {new Date().toLocaleDateString()}
-        </p>
-
-        <table className="w-full border-collapse text-sm">
-          <thead>
-            <tr className="border-b">
-              <th className="text-left py-2">Nome</th>
-              <th className="text-left py-2">Email</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.id} className="border-b">
-                <td className="py-2">{user.name}</td>
-                <td className="py-2">{user.email}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
     </>
   );
 }
