@@ -207,13 +207,13 @@ export default async function UserDetailsPage({ params }: PageProps) {
               Novo Pagamento
             </Link>
 
-            <Link
+            {/*  <Link
               href={"/associados"}
               className="w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm flex items-center justify-center gap-2"
             >
               <PrinterIcon size={16} className="text-gray-300" />
               Lista Impressão
-            </Link>
+            </Link> */}
           </div>
 
           <PaymentsTable payments={payments} user={user} />
