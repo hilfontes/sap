@@ -1,5 +1,5 @@
 "use client";
-import { Navbar } from "@/components/navbar";
+//import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -23,6 +23,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+import { NavbarLogin } from "./navbarlogin";
 
 const loginSchema = z.object({
   email: z.email("Email inválido"),
@@ -96,7 +97,7 @@ export default function LoginForm() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: "url('../bg-login2.jpg')" }}
     >
-      <Navbar />
+      <NavbarLogin />
 
       <Card
         className="w-full max-w-md border-0 overflow-hidden 

@@ -5,17 +5,11 @@ import { redirect } from "next/navigation";
 export default async function Home() {
   const cookiesList = await cookies();
 
-  //const requestUser = await fetch("http://localhost:3000/profile", {
-  // headers: {
-  //    cookie: cookiesList.toString(),
-  // },
-  //  cache: "no-store",
-  //   credentials: "include",
-  // });
+  /* const token = cookiesList.get("token")?.value;
 
-  // if (requestUser.ok) {
-  //    return redirect("/profile");
-  // }
+  if (token) {
+    redirect("/dashboard");
+  } */
 
   return <LoginForm />;
 }

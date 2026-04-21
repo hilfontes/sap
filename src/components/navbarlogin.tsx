@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { usePathname } from "next/navigation";
 import { User } from "lucide-react";
 
-export function Navbar() {
+export function NavbarLogin() {
   const pathname = usePathname();
   const isHome = pathname === "/";
   return (
@@ -31,13 +31,6 @@ export function Navbar() {
         {/* Rotas */}
         <div className="flex gap-6 items-center">
           <Link
-            href="/users"
-            className="text-white hover:text-blue-300 transition-colors"
-          >
-            Associados
-          </Link>
-
-          <Link
             href="/activities"
             className="text-white hover:text-blue-300 transition-colors"
           >
@@ -49,13 +42,6 @@ export function Navbar() {
             className="text-white hover:text-blue-300 transition-colors"
           >
             Contactos
-          </Link>
-
-          <Link
-            href="/dashboard"
-            className="text-white hover:text-blue-300 transition-colors"
-          >
-            Dashboard
           </Link>
 
           <Link
