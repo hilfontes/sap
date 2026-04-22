@@ -17,7 +17,7 @@ export function NavbarLogin({ role }: NavbarLoginProps) {
   return (
     <nav className="fixed top-0 left-0 w-full z-50">
       <div
-        className={`flex items-center justify-between px-8 h-16 transition-colors duration-300
+        className={`flex items-center justify-between px-8 h-14 transition-colors duration-300
     ${isHome ? "bg-white/10 backdrop-blur-md" : "bg-blue-950 shadow-md"}
   `}
       >

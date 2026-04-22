@@ -26,16 +26,6 @@ import { NavbarLogin } from "@/components/navbarlogin";
 
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
 
-const cookieString = document.cookie;
-const role = cookieString
-  .split("; ")
-  .find((row) => row.startsWith("role="))
-  ?.split("=")[1];
-const token = cookieString
-  .split("; ")
-  .find((row) => row.startsWith("token="))
-  ?.split("=")[1];
-
 // ✅ schema validação
 const schema = z.object({
   name: z.string().min(3, "Nome obrigatório"),
@@ -57,6 +47,8 @@ const schema = z.object({
 type FormData = z.infer<typeof schema>;
 
 export default function CreateUserPage() {
+  const [role, setRole] = useState<string | undefined>();
+  const [token, setToken] = useState<string | undefined>();
   const router = useRouter();
 
   const [provinces, setProvinces] = useState([]);
@@ -80,6 +72,18 @@ export default function CreateUserPage() {
 
   // 🔄 carregar dados
   useEffect(() => {
+    const cookieString = document.cookie;
+    const role = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("role="))
+      ?.split("=")[1];
+    const token = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
+    setRole(role);
+    setToken(token);
+
     fetch(`${API_URL}/api/provinces/getprovinces`)
       .then((res) => res.json())
       .then(setProvinces);
