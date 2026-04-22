@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar";
+import { cookies } from "next/headers";
 import { SendReceiptButton } from "@/components/SendReceiptButton";
 import { PaymentsTable } from "@/components/PaymentsTable";
 import Link from "next/link";
@@ -17,6 +18,8 @@ import {
   CreditCard,
   BadgeCheck,
 } from "lucide-react";
+import { redirect } from "next/navigation";
+import { NavbarLogin } from "@/components/navbarlogin";
 
 type Payment = {
   id: number;
@@ -38,11 +41,23 @@ type PageProps = {
 };
 
 export default async function UserDetailsPage({ params }: PageProps) {
+  const cookieStore = await cookies();
+  const token = cookieStore.get("token")?.value;
+  const roleStored = cookieStore.get("role")?.value;
+
   const { id } = await params;
 
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
+  if (!token) {
+    redirect("/");
+  }
+
   const userRes = await fetch(`${API_URL}/api/auth/users/${id}`, {
     cache: "no-store",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
 
   if (!userRes.ok) {
@@ -60,7 +75,7 @@ export default async function UserDetailsPage({ params }: PageProps) {
 
   return (
     <>
-      <Navbar />
+      <NavbarLogin role={roleStored?.toString()} />
 
       <div className="p-6 pt-8"></div>
       <div className="p-6 space-y-8">

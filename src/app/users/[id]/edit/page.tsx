@@ -18,6 +18,7 @@ import {
   CreditCard,
   ReceiptText,
 } from "lucide-react";
+import { NavbarLogin } from "@/components/navbarlogin";
 
 const userSchema = z.object({
   name: z.string().min(3, "Nome muito curto"),
@@ -43,6 +44,17 @@ type PageProps = {
 };
 
 export default function EditUserPage({ params }: PageProps) {
+  const cookieString = document.cookie;
+  const token = cookieString
+    .split("; ")
+    .find((row) => row.startsWith("token="))
+    ?.split("=")[1];
+  const role = cookieString
+    .split("; ")
+    .find((row) => row.startsWith("role="))
+    ?.split("=")[1];
+
+  console.log("pegou o token:", token);
   const { id } = use(params);
   const router = useRouter();
   //const [loaded, setLoaded] = useState(false);
@@ -61,7 +73,9 @@ export default function EditUserPage({ params }: PageProps) {
     async function loadAll() {
       try {
         const [userRes, instRes, provRes, specRes, natRes] = await Promise.all([
-          fetch(`${API_URL}/api/auth/users/${id}`),
+          fetch(`${API_URL}/api/auth/users/${id}`, {
+            headers: { Authorization: `Bearer ${token}` },
+          }),
           fetch(`${API_URL}/api/institutions/getinstitutions`),
           fetch(`${API_URL}/api/provinces/getprovinces`),
           fetch(`${API_URL}/api/specialities/getspecialities`),
@@ -111,10 +125,13 @@ export default function EditUserPage({ params }: PageProps) {
 
   const onSubmit = async (data: FormData) => {
     console.log("Dados do formulário:", data);
+    //const cookieString = document.cookie;
+
     const res = await fetch(`${API_URL}/api/auth/updateuser/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         ...data,
@@ -144,7 +161,7 @@ export default function EditUserPage({ params }: PageProps) {
   //console.log("fordata", form.getValues());
   return (
     <>
-      <Navbar />
+      <NavbarLogin role={role} />
 
       <div className="min-h-screen flex justify-center items-center bg-gray-100 p-2 mt-10">
         <form className="bg-white shadow-lg rounded-lg p-4 w-full max-w-3xl">

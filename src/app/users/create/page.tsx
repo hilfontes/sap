@@ -22,8 +22,19 @@ import {
   IdCardIcon,
   Phone,
 } from "lucide-react";
+import { NavbarLogin } from "@/components/navbarlogin";
 
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
+const cookieString = document.cookie;
+const role = cookieString
+  .split("; ")
+  .find((row) => row.startsWith("role="))
+  ?.split("=")[1];
+const token = cookieString
+  .split("; ")
+  .find((row) => row.startsWith("token="))
+  ?.split("=")[1];
 
 // ✅ schema validação
 const schema = z.object({
@@ -94,6 +105,7 @@ export default function CreateUserPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           ...data,
@@ -127,7 +139,7 @@ export default function CreateUserPage() {
   console.log(getValues());
   return (
     <>
-      <Navbar />
+      <NavbarLogin role={role} />
 
       <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4 mt-10">
         <Toaster position="top-right" />

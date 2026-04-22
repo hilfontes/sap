@@ -1,5 +1,8 @@
 "use client";
 import { Navbar } from "@/components/navbar";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
+//import { NavbarLogin } from "@/components/navbarlogin";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -13,6 +16,7 @@ import {
   Plus,
   PrinterIcon,
 } from "lucide-react";
+import { NavbarLogin } from "@/components/navbarlogin";
 
 type User = {
   id: number;
@@ -39,6 +43,7 @@ type User = {
 
 const ITEMS_PER_PAGE = 15;
 const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
+
 export default function UsersPage() {
   const [openModal, setOpenModal] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
@@ -46,10 +51,49 @@ export default function UsersPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
+  //const cookies = document.cookie;
+  const [roleStored, setRoleStored] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
   useEffect(() => {
-    fetch(`${API_URL}/api/auth/users?order=${sortOrder}`)
-      .then((res) => res.json())
-      .then((data) => setUsers(data));
+    // 🔐 ler cookies
+    const cookieString = document.cookie;
+
+    const token = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("token="))
+      ?.split("=")[1];
+
+    console.log("Token do cookie:", token);
+
+    const role = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("role="))
+      ?.split("=")[1];
+
+    // guardar role no state
+    if (role) {
+      setRoleStored(role);
+    }
+
+    // 🚫 se não tiver token, podes redirecionar
+    if (!token) {
+      console.log("Sem token");
+      return;
+    }
+
+    // 📡 fetch com token
+    fetch(`${API_URL}/api/auth/users?order=${sortOrder}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Erro ao buscar users");
+        return res.json();
+      })
+      .then((data) => setUsers(data))
+      .catch((err) => console.log(err));
   }, [sortOrder]);
 
   // 🔍 Pesquisa por nome e email
@@ -66,7 +110,7 @@ export default function UsersPage() {
 
   return (
     <>
-      <Navbar />
+      <NavbarLogin role={roleStored?.toString()} />
 
       <div className="p-6 pt-20"></div>
       <div className="p-6">

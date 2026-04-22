@@ -1,5 +1,5 @@
 "use client";
-//import { Navbar } from "@/components/navbar";
+import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -64,7 +64,9 @@ export default function LoginForm() {
 
       // 3. Ler o body
       const data = await request.json();
-      console.log("Response body:", data);
+
+      //console.log("Response body:", data);
+
       //return;
       if (!request.ok) {
         form.setError("email", { message: "Credenciais inválidas" });
@@ -73,7 +75,7 @@ export default function LoginForm() {
         return;
       }
       console.log("Login bem-sucedida");
-      console.log("Token...:", data.accessToken);
+      //console.log("Token antes do fetch...:", data.accessToken);
 
       const requestUser = await fetch(`${API_URL}/api/auth/me`, {
         method: "POST",
@@ -82,8 +84,15 @@ export default function LoginForm() {
         },
         credentials: "include",
       });
+
       const userData = await requestUser.json();
-      console.log("User data:", userData.id);
+
+      console.log("Role depois da chamada...:", userData.role);
+
+      document.cookie = `token=${data.accessToken}; path=/`;
+      document.cookie = `role=${userData.role}; path=/`;
+      console.log("User Data:", userData);
+      console.log("User Role:", userData.role);
       return router.replace(`/users/${userData.id}`);
     } catch (error) {
       console.log(error);
@@ -97,7 +106,7 @@ export default function LoginForm() {
       className="min-h-screen flex items-center justify-center bg-cover bg-center relative"
       style={{ backgroundImage: "url('../bg-login2.jpg')" }}
     >
-      <NavbarLogin />
+      <NavbarLogin role="ASSOCIATE" />
 
       <Card
         className="w-full max-w-md border-0 overflow-hidden 

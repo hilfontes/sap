@@ -8,6 +8,8 @@ import { User } from "lucide-react";
 export function Navbar() {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  //const canSeeAdminMenus = user?.role === "ADMIN" || user?.role === "ADMIN_ASSOCIATE";
+
   return (
     <nav className="fixed top-0 left-0 w-full z-50">
       <div
