@@ -2,6 +2,7 @@
 
 //import { PaymentsTable } from "@/components/PaymentsTable";
 import { useState } from "react";
+import { useEffect } from "react";
 //import { SendReceiptButton } from "@/components/SendReceiptButton";
 import { GeneratePDF } from "@/components/GeneratePDF";
 import {
@@ -18,6 +19,7 @@ import {
 } from "lucide-react";
 import { generateReceiptHTML } from "@/lib/generateReceiptHTML";
 import { ReceiptModal } from "./ReceiptModal";
+import { string } from "zod";
 
 type Payment = {
   id: number;
@@ -46,6 +48,7 @@ export function PaymentsTable({ payments, user }: Props) {
   const [confirmId, setConfirmId] = useState<number | null>(null);
   const [data, setData] = useState(payments);
   const [selectedHTML, setSelectedHTML] = useState<string | null>(null);
+  const [role, setRole] = useState<string | null>(null);
 
   function markAsSent(id: number) {
     setData((prev) =>
@@ -55,6 +58,20 @@ export function PaymentsTable({ payments, user }: Props) {
 
   const [loadingId, setLoadingId] = useState<number | null>(null);
 
+  useEffect(() => {
+    if (typeof document === "undefined") return;
+
+    const cookieString = document.cookie;
+
+    const roleTaken = cookieString
+      .split("; ")
+      .find((row) => row.startsWith("role="))
+      ?.split("=")[1];
+
+    if (roleTaken) {
+      setRole(roleTaken);
+    }
+  }, []);
   async function confirmPayment(id: number) {
     setLoadingId(id);
 
@@ -162,7 +179,7 @@ export function PaymentsTable({ payments, user }: Props) {
                 {/* ✅ Campo atualizado */}
                 <td className="h-14 p-3 flex gap-2">
                   {/* BOTÃO CONFIRMAR PAGAMENTO */}
-                  {payment.status !== "PAGO" && (
+                  {payment.status !== "PAGO" && role !== "ASSOCIATE" && (
                     <button
                       onClick={() => setConfirmId(payment.id)}
                       className="h-8 px-3 bg-green-600 text-white text-xs rounded hover:bg-green-800"
