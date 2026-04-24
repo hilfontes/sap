@@ -145,6 +145,12 @@ export default function UsersPage() {
               />
             </div>
             <Link
+              href="/admin"
+              className="h-10 flex items-center bg-green-100 text-green-700 px-4 rounded-full hover:bg-green-200 text-sm transition"
+            >
+              Painel Admin
+            </Link>
+            <Link
               href={"/associados"}
               className="w-auto bg-blue-900 text-white px-4 py-2 rounded-md hover:bg-blue-800 text-sm flex items-center justify-center gap-2"
             >

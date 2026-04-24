@@ -17,15 +17,21 @@ export function NavbarLogin({ role }: NavbarLoginProps) {
   return (
     <nav className="fixed top-0 left-0 w-full z-50">
       <div
-        className={`flex items-center justify-between px-8 h-14 transition-colors duration-300
+        className={`flex items-center justify-between pl-0 pr-6 h-14 transition-colors duration-300
     ${isHome ? "bg-white/10 backdrop-blur-md" : "bg-blue-950 shadow-md"}
   `}
       >
         {/* Logo / Nome */}
-        <div className="flex items-center">
-          <div className="relative h-12 w-22 overflow-hidden">
-            <Image src="/logo.png" alt="Logo" fill priority />
-          </div>
+        <div className="flex items-center h-full">
+          <Link href="/" className="relative h-full w-28 cursor-pointer">
+            <Image
+              src="/logo.png"
+              alt="Logo"
+              fill
+              priority
+              className="object-contain"
+            />
+          </Link>
         </div>
 
         {/* Rotas */}
