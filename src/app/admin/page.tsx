@@ -40,7 +40,6 @@ export default function AdminPage() {
     if (modal.item) {
       await updateItem(config.endpoint, modal.item.id, payload);
     } else {
-      console.log("PAYLOAD:", payload);
       await createItem(config.endpoint, payload);
     }
 
