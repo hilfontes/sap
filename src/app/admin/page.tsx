@@ -38,11 +38,10 @@ export default function AdminPage() {
     };
 
     if (modal.item) {
-      await updateItem(config.endpoint, modal.item.id, payload);
+      await updateItem(config.endpoint, (modal.item as any).id, payload);
     } else {
       await createItem(config.endpoint, payload);
     }
-
     setModal({ open: false, item: null });
     load();
   }
