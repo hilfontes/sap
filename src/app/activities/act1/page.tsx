@@ -48,7 +48,7 @@ export default function ActivitiesPage() {
         Webinar - Pediatria Internacional
       </h1>
 
-      <h2 className="text-4xl font-bold mb-10">Palestrantes</h2>
+      <h2 className="text-4xl font-bold mb-10">Palestrantes:</h2>
 
       {/* Grid das 6 imagens */}
       <div className="grid grid-cols-6 gap-6">
