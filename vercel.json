@@ -2,7 +2,7 @@
   "rewrites": [
     {
       "source": "/api/:path*",
-      "destination": "https://sap-api-8ktd.onrender.com/:path*"
+      "destination": "https://api.sap-pediatria.com/:path*"
     }
   ]
 }
