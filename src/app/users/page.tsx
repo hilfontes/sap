@@ -96,6 +96,31 @@ export default function UsersPage() {
       .catch((err) => console.log(err));
   }, [sortOrder]);
 
+  // Envia credenciais por email
+  const handleSendPassword = async (user: User) => {
+    try {
+      const res = await fetch(`${API_URL}/api/auth/send-password`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          userId: user.id,
+        }),
+      });
+
+      if (!res.ok) throw new Error("Erro ao enviar senha");
+
+      alert("Senha enviada com sucesso!");
+    } catch (err) {
+      console.error(err);
+      alert("Erro ao enviar senha");
+    }
+  };
+
+  // Fim envia credenciais por email
+
   // 🔍 Pesquisa por nome e email
   const filteredUsers = users.filter(
     (user) =>
@@ -224,6 +249,14 @@ export default function UsersPage() {
                       >
                         Detalhes
                       </Link>
+
+                      {/* 📊 Novo....enviar email.. */}
+                      <button
+                        onClick={() => handleSendPassword(user)}
+                        className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-500 text-sm"
+                      >
+                        Enviar credenciais
+                      </button>
                     </td>
                   </tr>
                 ))}
