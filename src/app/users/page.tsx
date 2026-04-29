@@ -246,7 +246,7 @@ export default function UsersPage() {
 
                   <th className="text-black p-3 text-left">
                     <div className="flex items-center gap-2">
-                      <Settings size={16} /> Ações
+                      <Settings size={16} /> Ações...
                     </div>
                   </th>
                 </tr>
