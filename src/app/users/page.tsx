@@ -137,7 +137,7 @@ export default function UsersPage() {
       alert("Senha enviada com sucesso!");
     } catch (err) {
       console.error(err);
-      alert("Erro ao enviar senha");
+      alert("Erro ao enviar senha!");
     }
   };
 
