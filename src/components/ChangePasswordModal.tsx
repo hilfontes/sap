@@ -1,8 +1,14 @@
 "use client";
 
 import { useState } from "react";
-
-export default function ChangePasswordModal({ isOpen, onClose }) {
+type ChangePasswordModalProps = {
+  isOpen: boolean;
+  onClose: () => void;
+};
+export default function ChangePasswordModal({
+  isOpen,
+  onClose,
+}: ChangePasswordModalProps) {
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [password, setPassword] = useState("");
 
