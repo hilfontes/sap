@@ -4,20 +4,18 @@ import { useState } from "react";
 type ChangePasswordModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  token: string | null;
 };
 export default function ChangePasswordModal({
   isOpen,
   onClose,
+  token,
 }: ChangePasswordModalProps) {
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [password, setPassword] = useState("");
 
-  if (!isOpen) return null;
-  const token = document.cookie
-    .split("; ")
-    .find((row) => row.startsWith("token="))
-    ?.split("=")[1];
   const handleSubmit = async () => {
+    console.log("TOKEN NO MODAL:", token);
     const response = await fetch(`${API_URL}/api/auth/change-password`, {
       method: "PATCH",
       headers: {

@@ -39,6 +39,8 @@ export default function LoginForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [userId, setUserId] = useState<string | null>(null);
+  const [token, setToken] = useState<string | null>(null);
+
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
@@ -67,6 +69,8 @@ export default function LoginForm() {
 
       // 3. Ler o body
       const data = await request.json();
+
+      setToken(data.accessToken);
 
       //console.log("Response body:", data);
 
@@ -219,13 +223,16 @@ export default function LoginForm() {
           </Form>
         </CardContent>
       </Card>
-      <ChangePasswordModal
-        isOpen={showChangePassword}
-        onClose={() => {
-          setShowChangePassword(false);
-          router.replace(`/users/${userId}`);
-        }}
-      />
+      {showChangePassword && (
+        <ChangePasswordModal
+          isOpen={showChangePassword}
+          token={token}
+          onClose={() => {
+            setShowChangePassword(false);
+            router.replace(`/users/${userId}`);
+          }}
+        />
+      )}
     </div>
   );
 }
