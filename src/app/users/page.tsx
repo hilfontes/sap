@@ -3,6 +3,7 @@ import { Navbar } from "@/components/navbar";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 //import { NavbarLogin } from "@/components/navbarlogin";
+import { Eye } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import {
@@ -50,6 +51,9 @@ export default function UsersPage() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
+  const [generatedPassword, setGeneratedPassword] = useState<string | null>(
+    null,
+  );
 
   //const cookies = document.cookie;
   const [roleStored, setRoleStored] = useState<string | null>(null);
@@ -96,6 +100,24 @@ export default function UsersPage() {
       .catch((err) => console.log(err));
   }, [sortOrder]);
 
+  const handleGeneratePassword = async (userId: number) => {
+    const response = await fetch(`${API_URL}/api/auth/generate-password`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ userId }),
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+      alert("Erro ao gerar senha");
+      return;
+    }
+
+    setGeneratedPassword(data.password);
+  };
   // Envia credenciais por email
   const handleSendPassword = async (user: User) => {
     try {
@@ -257,6 +279,15 @@ export default function UsersPage() {
                       >
                         Enviar credenciais
                       </button>
+
+                      <button onClick={() => handleGeneratePassword(user.id)}>
+                        👁️
+                      </button>
+                      {generatedPassword && (
+                        <div className="mt-2 text-sm text-green-600">
+                          Senha gerada: <strong>{generatedPassword}</strong>
+                        </div>
+                      )}
                     </td>
                   </tr>
                 ))}
