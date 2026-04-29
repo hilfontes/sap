@@ -80,6 +80,29 @@ export default function LoginForm() {
       console.log("Login bem-sucedida");
       //console.log("Token antes do fetch...:", data.accessToken);
 
+      // guarda token
+      document.cookie = `token=${data.accessToken}; path=/`;
+
+      // 🚨 usa diretamente o login response
+      if (data.mustChangePassword) {
+        // precisamos do ID → então chamamos /me só aqui
+        const requestUser = await fetch(`${API_URL}/api/auth/me`, {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${data.accessToken}`,
+          },
+          credentials: "include",
+        });
+
+        const userData = await requestUser.json();
+
+        setUserId(userData.id);
+        setShowChangePassword(true);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // fluxo normal
       const requestUser = await fetch(`${API_URL}/api/auth/me`, {
         method: "POST",
         headers: {
@@ -88,16 +111,11 @@ export default function LoginForm() {
         credentials: "include",
       });
 
-      /* const userData = await requestUser.json();
-
-      console.log("Role depois da chamada...:", userData.role);
-
-      document.cookie = `token=${data.accessToken}; path=/`;
-      document.cookie = `role=${userData.role}; path=/`;
-      
-
-      return router.replace(`/users/${userData.id}`); */
       const userData = await requestUser.json();
+
+      document.cookie = `role=${userData.role}; path=/`;
+
+      return router.replace(`/users/${userData.id}`);
 
       document.cookie = `token=${data.accessToken}; path=/`;
       document.cookie = `role=${userData.role}; path=/`;

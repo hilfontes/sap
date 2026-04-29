@@ -13,12 +13,16 @@ export default function ChangePasswordModal({
   const [password, setPassword] = useState("");
 
   if (!isOpen) return null;
-
+  const token = document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("token="))
+    ?.split("=")[1];
   const handleSubmit = async () => {
     const response = await fetch(`${API_URL}/api/auth/change-password`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // 👈 ESSENCIAL
       },
       credentials: "include",
       body: JSON.stringify({ password }),
