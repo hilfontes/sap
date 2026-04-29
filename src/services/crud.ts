@@ -11,7 +11,7 @@ export async function createItem(endpoint: string, data: any) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
-  });
+  });  
 }
 
 export async function updateItem(endpoint: string, id: number, data: any) {

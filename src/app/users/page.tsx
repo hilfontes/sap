@@ -245,7 +245,7 @@ export default function UsersPage() {
                     <td className="p-3">
                       <Link
                         href={`/users/${user.id}`}
-                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm"
+                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm mr-2"
                       >
                         Detalhes
                       </Link>
@@ -253,7 +253,7 @@ export default function UsersPage() {
                       {/* 📊 Novo....enviar email.. */}
                       <button
                         onClick={() => handleSendPassword(user)}
-                        className="bg-green-600 text-white px-3 py-1 rounded-md hover:bg-green-500 text-sm"
+                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm"
                       >
                         Enviar credenciais
                       </button>

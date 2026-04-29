@@ -1,4 +1,6 @@
 "use client";
+
+import ChangePasswordModal from "@/components/ChangePasswordModal";
 import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
@@ -35,7 +37,8 @@ type LoginFormValues = z.infer<typeof loginSchema>;
 export default function LoginForm() {
   const API_URL = process.env.NEXT_PUBLIC_FRONTEND_URL;
   const [isSubmitting, setIsSubmitting] = useState(false);
-
+  const [showChangePassword, setShowChangePassword] = useState(false);
+  const [userId, setUserId] = useState<string | null>(null);
   const router = useRouter();
 
   const form = useForm<LoginFormValues>({
@@ -85,14 +88,29 @@ export default function LoginForm() {
         credentials: "include",
       });
 
-      const userData = await requestUser.json();
+      /* const userData = await requestUser.json();
 
       console.log("Role depois da chamada...:", userData.role);
 
       document.cookie = `token=${data.accessToken}; path=/`;
       document.cookie = `role=${userData.role}; path=/`;
-      console.log("User Data:", userData);
-      console.log("User Role:", userData.role);
+      
+
+      return router.replace(`/users/${userData.id}`); */
+      const userData = await requestUser.json();
+
+      document.cookie = `token=${data.accessToken}; path=/`;
+      document.cookie = `role=${userData.role}; path=/`;
+
+      // 🚨 AQUI está a lógica nova
+      if (userData.mustChangePassword) {
+        setUserId(userData.id);
+        setShowChangePassword(true);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // fluxo normal
       return router.replace(`/users/${userData.id}`);
     } catch (error) {
       console.log(error);
@@ -183,6 +201,13 @@ export default function LoginForm() {
           </Form>
         </CardContent>
       </Card>
+      <ChangePasswordModal
+        isOpen={showChangePassword}
+        onClose={() => {
+          setShowChangePassword(false);
+          router.replace(`/users/${userId}`);
+        }}
+      />
     </div>
   );
 }
