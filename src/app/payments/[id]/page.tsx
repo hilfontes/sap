@@ -35,7 +35,7 @@ export default function PaymentsPage({ params }: PageProps) {
         const data = await res.json();
         console.log("Utilizador logado:", data);
       } catch (error) {
-        console.error("Erro ao carregar usuário:", error);
+        console.error("Erro ao carregar usuário...:", error);
         //location.href = "/";
       }
     }
