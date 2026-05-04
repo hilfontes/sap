@@ -51,9 +51,9 @@ export default function UsersPage() {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
-  const [generatedPassword, setGeneratedPassword] = useState<string | null>(
-    null,
-  );
+  const [generatedPasswords, setGeneratedPasswords] = useState<
+    Record<number, string>
+  >({});
 
   //const cookies = document.cookie;
   const [roleStored, setRoleStored] = useState<string | null>(null);
@@ -105,6 +105,7 @@ export default function UsersPage() {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`, // 👈 FALTAVA ISTO
       },
       body: JSON.stringify({ userId }),
     });
@@ -116,7 +117,11 @@ export default function UsersPage() {
       return;
     }
 
-    setGeneratedPassword(data.password);
+    // 👉 guarda só para este user
+    setGeneratedPasswords((prev) => ({
+      ...prev,
+      [userId]: data.password,
+    }));
   };
   // Envia credenciais por email
   const handleSendPassword = async (user: User) => {
@@ -125,14 +130,19 @@ export default function UsersPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // 👈 FALTAVA ISTO
         },
         body: JSON.stringify({
           userId: user.id,
         }),
       });
 
-      if (!res.ok) throw new Error("Erro ao enviar senha");
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.log("Erro backend:", errorData);
+        alert(errorData.message || "Erro ao gerar senha");
+        return;
+      }
 
       alert("Senha enviada com sucesso!");
     } catch (err) {
@@ -275,17 +285,21 @@ export default function UsersPage() {
                       {/* 📊 Novo....enviar email.. */}
                       <button
                         onClick={() => handleSendPassword(user)}
-                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm"
+                        className="bg-blue-900 text-white px-3 py-1 rounded-md hover:bg-blue-800 text-sm mr-2"
                       >
                         Enviar credenciais
                       </button>
 
-                      <button onClick={() => handleGeneratePassword(user.id)}>
+                      <button
+                        onClick={() => handleGeneratePassword(user.id)}
+                        className="bg-gray-200 text-gray-700 px-3 py-1 rounded-md hover:bg-gray-300 text-sm inline-flex items-center justify-center"
+                      >
                         👁️
                       </button>
-                      {generatedPassword && (
-                        <div className="mt-2 text-sm text-green-600">
-                          Senha gerada: <strong>{generatedPassword}</strong>
+                      {generatedPasswords[user.id] && (
+                        <div className="mt-2 text-sm text-green-900">
+                          Senha gerada:{" "}
+                          <strong>{generatedPasswords[user.id]}</strong>
                         </div>
                       )}
                     </td>
