@@ -18,7 +18,7 @@ export default function PaymentsPage({ params }: PageProps) {
     amount: "",
     frequency: "MONTHLY",
     monthYear: "",
-    paymentDate: "", // ✅ novo campo
+    PaymentDate: "", // ✅ novo campo
     reference: "",
     OBS: "",
   });
@@ -112,7 +112,7 @@ export default function PaymentsPage({ params }: PageProps) {
           {/* ✅ novo campo data de pagamento */}
           <input
             type="date"
-            name="paymentDate"
+            name="PaymentDate"
             onChange={handleChange}
             className="w-full border rounded-md p-2"
             lang="pt"
