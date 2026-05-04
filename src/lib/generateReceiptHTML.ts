@@ -179,16 +179,16 @@ const valorExtenso = numberToWords(payment.amount);
 
     <div class="company">
       <strong>Sociedade Angolana de Pediatria</strong>
-      <p>NIF: 500000000</p>
-      <p>Luanda, Angola</p>
-      <p>Email: sap@sapangola.com</p>
+      <p>NIF: 5000278289</p>
+      <p>Edifício Millennium, Avenida Lenine, n.º 123, piso 5</p>
+      <p>Email: sap.sociedade@gmail.com</p>
     </div>
   </div>
 
   <!-- RIGHT -->
   <div class="right">
     <h1>RECIBO</h1>
-    <p><strong>Nº:</strong> ${payment.reference || "0000"}</p>
+    <p><strong>Nº:</strong> ${payment.reference || "-"}</p>
     <p><strong>Data:</strong> ${new Date().toLocaleDateString()}</p>
   </div>
 
@@ -249,7 +249,7 @@ const valorExtenso = numberToWords(payment.amount);
 
         <!-- FOOTER -->
         <div class="footer">
-       
+         <p>OBS:${payment.OBS || "-"}</p>
           Documento processado por computador • Válido sem assinatura
         </div>
 
