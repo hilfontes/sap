@@ -40,7 +40,7 @@ export default function PaymentsReportPage() {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-6">
-        SAP - Relatório de Pagamento de Quotas e Joias
+        SAP - Relatório de Pagamento de Quotas e Joia
       </h1>
 
       {/* FILTROS */}
