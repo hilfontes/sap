@@ -109,6 +109,15 @@ export function NavbarLogin({ role }: NavbarLoginProps) {
             </Link>
           )}
 
+          {!isHome && canSeeAdminMenus && (
+            <Link
+              href="/reports"
+              className="text-white hover:text-blue-300 transition-colors"
+            >
+              Report $
+            </Link>
+          )}
+
           <Link
             href="/"
             className="flex items-center justify-center w-9 h-9 rounded-full bg-white/20 hover:bg-white/30 transition"
