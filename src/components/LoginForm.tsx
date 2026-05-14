@@ -1,7 +1,7 @@
 "use client";
 
 import ChangePasswordModal from "@/components/ChangePasswordModal";
-import { Navbar } from "@/components/navbar";
+//import { Navbar } from "@/components/navbar";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -25,6 +25,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+//import { NavbarLogin } from "./navbarlogin";
+//import { navbarnew } from "./navbarnew";
+import { NavbarLogin1 } from "./navbarnew";
 import { NavbarLogin } from "./navbarlogin";
 
 const loginSchema = z.object({
